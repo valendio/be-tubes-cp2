@@ -1,4 +1,22 @@
 {
     "PORT": 9000,
-    "ENVIRONTMENT": "PRODUCTION"
+    "ENVIRONMENT": "DEVELOPMENT",
+    "AUTH_API_BASIC": [{"username": "telkom", "password": "da1c25d8-37c8-41b1-afe2-42dd4825bfea"}],
+    "DSN_SENTRY_URL": "https://96d5b15d655e41cd81f2c15f82b8aec3:196f1781b900470f98bf362274d3f869@sentry.io/279589",
+    "AWS_CREDENTIAL":{
+        "accessKeyId": "AKIAIAYZ2Y5P2BHL56PA",
+        "secretAccessKey": "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",
+        "region": "ap-southeast-1"
+    },
+    "PUBLIC_KEY_PATH": "public.pem",
+    "PRIVATE_KEY_PATH": "private.pem",
+    "MOCKUP_TOPIC": "arn:aws:sns:ap-southeast-1:632537985342:MockupTopic",
+    "DEVELOPMENT_MONGO_DATABASE_URL": "mongodb://localhost:27017/domain",
+    "DEVELOPMENT_MYSQL_DATABASE_CONFIG": {
+        "connectionLimit": "100",
+        "host": "localhost",
+        "user": "root",
+        "password": "12344321",
+        "database": "mockup"
+    }
 }
