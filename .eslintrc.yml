@@ -47,7 +47,7 @@ rules:
   # useful for code clean-up
   no-unused-vars: [1, {"vars": "all", "args": "none"}]
 
-  no-console: 0
+  no-console: 2
 
   prefer-arrow-callback:
     - error
