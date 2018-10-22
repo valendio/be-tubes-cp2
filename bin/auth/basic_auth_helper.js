@@ -7,7 +7,8 @@ passport.use(new BasicStrategy((username, password, cb) => {
   User.findByUsername(username, (user) => {
     if (!user) {
       return cb(null, false);
-    } if (!user.isValidPassword(password)) {
+    }
+    if (!user.isValidPassword(password)) {
       return cb(null, false);
     }
     return cb(null, user);
