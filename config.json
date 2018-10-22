@@ -2,7 +2,7 @@
     "PORT": 9000,
     "ENVIRONMENT": "DEVELOPMENT",
     "AUTH_API_BASIC": [{"username": "telkom", "password": "da1c25d8-37c8-41b1-afe2-42dd4825bfea"}],
-    "DSN_SENTRY_URL": "https://96d5b15d655e41cd81f2c15f82b8aec3:196f1781b900470f98bf362274d3f869@sentry.io/279589",
+    "DSN_SENTRY_URL": "https://4a93795efe9c4714a106a7674de1bb11@sentry.io/1306051",
     "AWS_CREDENTIAL":{
         "accessKeyId": "AKIAIAYZ2Y5P2BHL56PA",
         "secretAccessKey": "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",

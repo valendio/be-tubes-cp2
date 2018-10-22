@@ -3,6 +3,7 @@ const query = require('../queries/query');
 const wrapper = require('../../../../helpers/utils/wrapper');
 const jwtAuth = require('../../../../auth/jwt_auth_helper');
 const commonUtil = require('../../../../helpers/utils/common');
+const logger = require('../../../../helpers/utils/logger');
 
 const algorithm = 'aes-256-ctr';
 const secretKey = 'Dom@in2018';
@@ -10,9 +11,11 @@ const secretKey = 'Dom@in2018';
 class User {
 
   async generateCredential(payload) {
+    const ctx = 'domain-generateCredential';
     const { username, password } = payload;
     const user = await query.findOneUser({ username });
     if (user.err) {
+      logger.log(ctx, user.err, 'user not found');
       return wrapper.error('error', user.err, 409);
     }
     const userId = user.data._id;
