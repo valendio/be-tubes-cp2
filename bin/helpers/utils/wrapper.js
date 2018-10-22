@@ -13,7 +13,7 @@ const response = (res, type, result, message, code) => {
   if (code) {
     result.code = code;
   }
-  let status = false;
+  let status;
   switch (type) {
   case 'fail':
     status = false;
@@ -41,7 +41,7 @@ const paginationResponse = (res, type, result, message = null, code = null) => {
   if (code) {
     result.code = code;
   }
-  let status = 'error';
+  let status;
   switch (type) {
   case 'fail':
     status = 'fail';
@@ -50,7 +50,7 @@ const paginationResponse = (res, type, result, message = null, code = null) => {
     status = 'success';
     break;
   default:
-    status = true;
+    status = 'error';
     break;
   }
   res.send(
