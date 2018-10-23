@@ -7,20 +7,10 @@ class DB {
     this.config = config;
   }
 
-  done(connection) {
-    connection.release();
-  }
-
-  createConnection() {
-    pool.init(this.config);
-  }
-
   async query(statement) {
-    const self = this;
-    let db = await pool.getConn(this.config);
+    let db = await pool.getConnection(this.config);
     if(validate.isEmpty(db)){
-      this.createConnection();
-      db = await pool.getConn(this.config);
+      db = await pool.createConnectionPool(this.config);
     }
     const recordset = () => {
       return new Promise((resolve, reject) => {
@@ -36,28 +26,28 @@ class DB {
             if (err.code === 'ECONNREFUSED') {
               errorMessage = 'Database connection was refused.';
             }
-            self.done(connection);
+            connection.release();
             reject(wrapper.error(err.code, errorMessage, 503));
           }
-
-          connection.query(statement, (err, result) => {
-            if (err) {
-              self.done(connection);
-              reject(wrapper.error(err.code, err.message, 503));
-            }
-
-            self.done(connection);
-            resolve(wrapper.data(JSON.stringify(result)));
-
-          });
-
+          else {
+            connection.query(statement, (err, result) => {
+              if (err) {
+                connection.release();
+                reject(wrapper.error(err.code, err.message, 503));
+              }
+              else {
+                connection.release();
+                resolve(wrapper.data(JSON.stringify(result)));
+              }
+            });
+          }
         });
       });
     };
     const result = await recordset().then(result => {
       return wrapper.data(result);
     }).catch(err => {
-      return err;
+      return wrapper.error(err.code, err.message, 503);
     });
     return result;
   }

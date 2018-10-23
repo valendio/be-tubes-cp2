@@ -2,22 +2,20 @@ const mysql = require('mysql');
 
 let variableGlobal = [];
 
-const init = (config) => {
-  createConnectionPool(config);
-};
-
 const createConnectionPool = async (config) => {
   const currConnection = variableGlobal.findIndex(conf => conf.config.toString() === config.toString());
+  let db;
   if(currConnection === -1){
-    const db = mysql.createPool(config);
+    db = await mysql.createPool(config);
     variableGlobal.push({
       config,
       connection: db
     });
   }
+  return db;
 };
 
-const getConn = async (config) => {
+const getConnection = async (config) => {
   const currConnection = variableGlobal.filter(conf => conf.config.toString() === config.toString());
   let conn;
   currConnection.map((obj,i) => {
@@ -30,6 +28,6 @@ const getConn = async (config) => {
 };
 
 module.exports = {
-  init,
-  getConn
+  createConnectionPool,
+  getConnection
 };
