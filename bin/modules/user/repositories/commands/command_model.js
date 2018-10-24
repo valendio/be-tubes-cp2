@@ -1,14 +1,10 @@
+const joi = require('joi');
 
-const generalMockup = () => {
-  const model = {
-    projectName: '',
-    domainName: '',
-    apiName: '',
-    mockup: ''
-  };
-  return model;
-};
+const login = joi.object({
+  username: joi.string().required(),
+  password: joi.string().required()
+});
 
 module.exports = {
-  generalMockup
+  login
 };

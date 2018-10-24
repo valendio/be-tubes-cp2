@@ -1,17 +1,25 @@
 
 const wrapper = require('../../../helpers/utils/wrapper');
 const commandHandler = require('../repositories/commands/command_handler');
+const commandModel = require('../repositories/commands/command_model');
 const queryHandler = require('../repositories/queries/query_handler');
+const validator = require('../utils/validator');
 
 const postDataLogin = async (req, res) => {
   const payload = req.body;
-  const postRequest = async () => commandHandler.postDataLogin(payload);
+  const validatePayload = validator.isValidPayload(payload, commandModel.login);
+  const postRequest = async (result) => {
+    if (result.err) {
+      return result;
+    }
+    return commandHandler.postDataLogin(payload);
+  };
   const sendResponse = async (result) => {
     /* eslint no-unused-expressions: [2, { allowTernary: true }] */
     (result.err) ? wrapper.response(res, 'fail', result)
       : wrapper.response(res, 'success', result, 'Your Request Has Been Processed');
   };
-  sendResponse(await postRequest());
+  sendResponse(await postRequest(validatePayload));
 };
 
 const getUser = async (req, res) => {
