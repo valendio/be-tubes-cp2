@@ -1,9 +1,9 @@
 
-const data = (data, description = '', code = 200) => ({ err: null, data, message: description, code });
+const data = (data, description = '', code = 200) => ( { err: null, message: description, data, code });
 
-const paginationData = (data, meta, description = '', code = 200) => ({ err: null, data, meta, message: description, code });
+const paginationData = (data, meta, description = '', code = 200) => ({ err: null, message: description, data, meta, code });
 
-const error = (err, description, code = 500) => ({ err, data: '', message: description, code });
+const error = (err, description, code = 500) => ({ err, code, data: '', message: description });
 
 const response = (res, type, result, message, code) => {
   /* eslint no-param-reassign: 2 */

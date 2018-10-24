@@ -13,9 +13,10 @@ const logger = winston.createLogger({
 });
 
 const log = (context, message, scope) => {
-  const obj = { context,
-    message: message.toString(),
-    scope
+  const obj = {
+    context,
+    scope,
+    message: message.toString()
   };
   sentryLog.sendError(obj);
   logger.info(obj);

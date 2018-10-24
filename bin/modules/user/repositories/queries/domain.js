@@ -6,10 +6,10 @@ class User {
 
   async viewUser(userId) {
     const user = await query.findById(userId);
-    const { data } = user;
     if (user.err) {
       return wrapper.error('error', 'Can not find user!', 404);
     }
+    const { data } = user;
     return wrapper.data(data, '', 200);
   }
 
