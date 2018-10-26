@@ -8,7 +8,7 @@ const wrapper = require('../helpers/utils/wrapper');
 const getKey = keyPath => fs.readFileSync(keyPath, 'utf8');
 
 const generateToken = async (payload) => {
-  const privateKey = getKey(config.getPrivateKey());
+  const privateKey = getKey(await config.getPrivateKey());
   const verifyOptions = {
     algorithm: 'RS256',
     audience: '97b33193-43ff-4e58-9124-b3a9b9f72c34',
@@ -33,7 +33,7 @@ const verifyToken = async (req, res, next) => {
   const result = {
     data: null
   };
-  const publicKey = getKey(config.getPublicKey());
+  const publicKey = fs.readFileSync(await config.getPublicKey(), 'utf8');
   const verifyOptions = {
     algorithm: 'RS256',
     audience: '97b33193-43ff-4e58-9124-b3a9b9f72c34',

@@ -49,6 +49,8 @@ rules:
 
   no-console: 2
 
+  max-len: [2, 150, 4]
+
   prefer-arrow-callback:
     - error
     - allowNamedFunctions: true
