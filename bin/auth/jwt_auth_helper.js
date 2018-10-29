@@ -4,6 +4,7 @@ const fs = require('fs');
 const config = require('../infra/configs/global_config');
 const userQuery = require('../modules/user/repositories/queries/query');
 const wrapper = require('../helpers/utils/wrapper');
+const { ERROR } = require('../helpers/http-error/custom_error');
 
 const getKey = keyPath => fs.readFileSync(keyPath, 'utf8');
 
@@ -42,21 +43,21 @@ const verifyToken = async (req, res, next) => {
 
   const token = getToken(req.headers);
   if (!token) {
-    return wrapper.response(res, 'fail', result, 'Invalid token!', 403);
+    return wrapper.response(res, 'fail', result, 'Invalid token!', ERROR.FORBIDDEN);
   }
   let decodedToken;
   try {
     decodedToken = jwt.verify(token, publicKey, verifyOptions);
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      return wrapper.response(res, 'fail', result, 'Access token expired!', 401);
+      return wrapper.response(res, 'fail', result, 'Access token expired!', ERROR.UNAUTHORIZED);
     }
-    return wrapper.response(res, 'fail', result, 'Token is not valid!', 401);
+    return wrapper.response(res, 'fail', result, 'Token is not valid!', ERROR.UNAUTHORIZED);
   }
   const userId = decodedToken.sub;
   const user = userQuery.findById(userId);
   if (user.err) {
-    wrapper.response(res, 'fail', result, 'Invalid token!', 403);
+    wrapper.response(res, 'fail', result, 'Invalid token!', ERROR.FORBIDDEN);
   }
   req.userId = userId;
   next();

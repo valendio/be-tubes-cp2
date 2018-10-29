@@ -53,7 +53,7 @@ const paginationResponse = (res, type, result, message = null, code = null) => {
     status = 'error';
     break;
   }
-  res.send(
+  res.send(result.code,
     {
       status,
       data: result.data,
