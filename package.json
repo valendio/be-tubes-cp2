@@ -9,8 +9,8 @@
   "scripts": {
     "start": "node index.js",
     "junit": "_mocha \"test/**/*_test.js\" --timeout=5000 --reporter mocha-junit-reporter",
-    "test": "mocha \"test/**/*_spec.js\" --timeout=5000",
-    "cover": "nyc _mocha \"test/**/*_spec.js\" --recursive",
+    "test": "mocha \"test/**/*_test.js\" --timeout=5000",
+    "cover": "nyc _mocha \"test/**/*_test.js\" --recursive",
     "slint": "sonarlint --src 'bin/**' --tests 'test/**'",
     "lint": "eslint bin test",
     "lint:fix": "npm run lint -- --fix"
