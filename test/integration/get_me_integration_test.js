@@ -9,7 +9,6 @@ const AppServer = require('../../bin/app/server');
 
 describe('Get Me', () => {
 
-  const sandbox = sinon.sandbox.create();
   let appServer;
   const publicKey = 'public.pem';
 
@@ -53,7 +52,6 @@ describe('Get Me', () => {
 
   afterEach(function () {
     this.server.close();
-    sandbox.restore();
     config.getPublicKey.restore();
     jwt.verify.restore();
   });
