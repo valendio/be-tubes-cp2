@@ -2,20 +2,21 @@
 const Mongo = require('../../../../helpers/databases/mongodb/db');
 const config = require('../../../../infra/configs/global_config');
 
-const insertOneUser = async (document) => {
+const insertOneMockupEventStore = async (document) => {
   const db = new Mongo(config.getDevelopmentDB());
-  db.setCollection('user');
+  db.setCollection('mockup-event-store');
   const result = await db.insertOne(document);
   return result;
 };
-const updateOneUser = async (parameter, document) => {
+
+const insertOneMockupView = async (document) => {
   const db = new Mongo(config.getDevelopmentDB());
-  db.setCollection('user');
-  const result = await db.upsertOne(parameter, document);
+  db.setCollection('mockup-view');
+  const result = await db.insertOne(document);
   return result;
 };
 
 module.exports = {
-  insertOneUser,
-  updateOneUser
+  insertOneMockupEventStore,
+  insertOneMockupView
 };
