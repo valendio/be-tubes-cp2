@@ -48,8 +48,10 @@ function AppServer() {
   });
 
   // authenticated client can access the end point, place code bellow
-  this.server.post('/api/v1/me', basicAuth.isAuthenticated, userHandler.postDataLogin);
+  this.server.post('/api/v1/register', basicAuth.isAuthenticated, userHandler.postDataRegister);
+  this.server.post('/api/v1/login', basicAuth.isAuthenticated, userHandler.postDataLogin);
   this.server.get('/api/v1/me', jwtAuth.verifyToken, userHandler.getUser);
+  this.server.put('/api/v1/me', jwtAuth.verifyToken, userHandler.postDataUpdateUser);
 }
 
 module.exports = AppServer;
