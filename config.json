@@ -1,5 +1,5 @@
 {
-    "PORT": 1234,
+    "PORT": 9000,
     "ENVIRONMENT": "DEVELOPMENT",
     "AUTH_API_BASIC": [{"username": "telkom", "password": "da1c25d8-37c8-41b1-afe2-42dd4825bfea"}],
     "DSN_SENTRY_URL": "https://4a93795efe9c4714a106a7674de1bb11@sentry.io/1306051",
@@ -11,7 +11,7 @@
     "PUBLIC_KEY_PATH": "public.pem",
     "PRIVATE_KEY_PATH": "private.pem",
     "MOCKUP_TOPIC": "arn:aws:sns:ap-southeast-1:632537985342:MockupTopic",
-    "DEVELOPMENT_MONGO_DATABASE_URL": "mongodb://root123:root123@ds157223.mlab.com:57223/dev-test",
+    "DEVELOPMENT_MONGO_DATABASE_URL": "mongodb://localhost:27017/domain",
     "DEVELOPMENT_MYSQL_DATABASE_CONFIG": {
         "connectionLimit": "100",
         "host": "localhost",
