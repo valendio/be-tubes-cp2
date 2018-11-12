@@ -1,3 +1,4 @@
+const config = require('../infra/configs/global_config');
 
 class User {
   constructor(username, password) {
@@ -11,7 +12,7 @@ class User {
 }
 
 module.exports.findByUsername = (username, cb) => {
-  const userDatas = [{ username: 'telkom', password: 'da1c25d8-37c8-41b1-afe2-42dd4825bfea' }];
+  const userDatas = config.get('/basicAuthApi');
   let userData;
 
   userData = userDatas.map((value) => {

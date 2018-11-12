@@ -2,7 +2,6 @@ const assert = require('assert');
 const sinon = require('sinon');
 const hippie = require('hippie');
 const jwt = require('jsonwebtoken');
-const config = require('../../bin/infra/configs/global_config');
 const user = require('../../bin/modules/user/repositories/queries/domain');
 const db = require('../../bin/helpers/databases/mongodb/db');
 const AppServer = require('../../bin/app/server');
@@ -10,7 +9,6 @@ const AppServer = require('../../bin/app/server');
 describe('Get Me', () => {
 
   let appServer;
-  const publicKey = 'public.pem';
 
   let result = {
     'success': true,
@@ -46,13 +44,11 @@ describe('Get Me', () => {
   beforeEach(function () {
     appServer = new AppServer();
     this.server = appServer.server;
-    sinon.stub(config, 'getPublicKey').resolves(publicKey);
     sinon.stub(jwt, 'verify').resolves(decodedToken);
   });
 
   afterEach(function () {
     this.server.close();
-    config.getPublicKey.restore();
     jwt.verify.restore();
   });
 

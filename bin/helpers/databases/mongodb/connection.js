@@ -28,7 +28,7 @@ const createConnection = async (config) => {
 const addConnectionPool = () => {
   const connectionMongo = connection();
   connectionMongo.index = 0;
-  connectionMongo.config = config.getDevelopmentDB();
+  connectionMongo.config = config.get('/mongoDbUrl');
   connectionPool.push(connectionMongo);
 };
 

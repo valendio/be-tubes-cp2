@@ -9,7 +9,7 @@ class SQS {
   }
 
   init() {
-    AWS.config.update(config.getAWSCredential());
+    AWS.config.update(config.get('/aws'));
     this.sqs = new AWS.SQS();
   }
 

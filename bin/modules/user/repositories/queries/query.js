@@ -4,14 +4,14 @@ const config = require('../../../../infra/configs/global_config');
 const ObjectId = require('mongodb').ObjectId;
 
 const findOneUser = async (parameter) => {
-  const db = new Mongo(config.getDevelopmentDB());
+  const db = new Mongo(config.get('/mongoDbUrl'));
   db.setCollection('user');
   const recordset = await db.findOne(parameter);
   return recordset;
 };
 
 const findById = async (id) => {
-  const db = new Mongo(config.getDevelopmentDB());
+  const db = new Mongo(config.get('/mongoDbUrl'));
   db.setCollection('user');
   const parameter = {
     _id: ObjectId(id)
