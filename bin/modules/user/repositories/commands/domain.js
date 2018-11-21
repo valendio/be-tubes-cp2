@@ -1,5 +1,6 @@
 
 const query = require('../queries/query');
+const command = require('./command');
 const wrapper = require('../../../../helpers/utils/wrapper');
 const jwtAuth = require('../../../../auth/jwt_auth_helper');
 const commonUtil = require('../../../../helpers/utils/common');
@@ -31,6 +32,25 @@ class User {
     };
     const token = await jwtAuth.generateToken(data);
     return wrapper.data(token, '', 200);
+  }
+
+  async register(payload) {
+    const { username, password } = payload;
+    const user = await query.findOneUser({ username });
+
+    if (user.data) {
+      return wrapper.error('error', 'user already exist', httpError.CONFLICT);
+    }
+
+    const chiperPwd = await commonUtil.encrypt(password, algorithm, secretKey);
+    const data = {
+      username,
+      password: chiperPwd
+    };
+
+    const { data:result } = await command.insertOneUser(data);
+    return wrapper.data(result, 'register user successfull', 200);
+
   }
 
 }

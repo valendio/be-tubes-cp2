@@ -32,7 +32,25 @@ const getUser = async (req, res) => {
   sendResponse(await getData());
 };
 
+const registerUser = async (req, res) => {
+  const payload = req.body;
+  const validatePayload = validator.isValidPayload(payload, commandModel.login);
+  const postRequest = async (result) => {
+    if (result.err) {
+      return result;
+    }
+    return commandHandler.registerUser(payload);
+  };
+  const sendResponse = async (result) => {
+    /* eslint no-unused-expressions: [2, { allowTernary: true }] */
+    (result.err) ? wrapper.response(res, 'fail', result)
+      : wrapper.response(res, 'success', result, 'Your Request Has Been Processed');
+  };
+  sendResponse(await postRequest(validatePayload));
+};
+
 module.exports = {
   postDataLogin,
-  getUser
+  getUser,
+  registerUser
 };
