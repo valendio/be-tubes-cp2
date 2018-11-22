@@ -22,6 +22,8 @@ describe('User-command', () => {
       sinon.stub(Mongo.prototype, 'insertOne').resolves(queryResult);
       const res = await command.insertOneUser({});
       assert.equal(res.data.username, queryResult.data.username);
+
+      Mongo.prototype.insertOne.restore();
     });
   });
 
