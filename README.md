@@ -28,7 +28,7 @@ PRIVATE_KEY_PATH=
 DSN_SENTRY_URL=
 MONGO_DATABASE_URL=
 ```
- - Then run this command
+- Then run this command
 ```sh
 Give the example
 ...
