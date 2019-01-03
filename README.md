@@ -28,8 +28,8 @@ PRIVATE_KEY_PATH=
 DSN_SENTRY_URL=
 MONGO_DATABASE_URL=
 ```
- - Then run this command
-```sh
+- Then run this command
+```
 Give the example
 ...
 $ npm install
