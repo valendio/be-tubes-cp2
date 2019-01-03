@@ -20,27 +20,12 @@ A step by step series of examples that tell you have to get a development env ru
 Say what the step will be
 - Create ENV file (.env) with this configuration:
 ```
-# ------------------------------------------------------------------
-# General
-# ------------------------------------------------------------------
 PORT=
-
-# ------------------------------------------------------------------
-# Authentication
-# ------------------------------------------------------------------
 BASIC_AUTH_USERNAME=
 BASIC_AUTH_PASSWORD=
 PUBLIC_KEY_PATH=
 PRIVATE_KEY_PATH=
-
-# ------------------------------------------------------------------
-# Sentry
-# ------------------------------------------------------------------
 DSN_SENTRY_URL=
-
-# ------------------------------------------------------------------
-# DB
-# ------------------------------------------------------------------
 MONGO_DATABASE_URL=
 ```
  - Then run this command
