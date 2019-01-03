@@ -29,7 +29,7 @@ DSN_SENTRY_URL=
 MONGO_DATABASE_URL=
 ```
 - Then run this command
-```sh
+```
 Give the example
 ...
 $ npm install
