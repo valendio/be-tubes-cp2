@@ -12,7 +12,7 @@ const postDataLogin = async (req, res) => {
     if (result.err) {
       return result;
     }
-    return commandHandler.postDataLogin(payload);
+    return commandHandler.postDataLogin(validatePayload.data);
   };
   const sendResponse = async (result) => {
     /* eslint no-unused-expressions: [2, { allowTernary: true }] */
@@ -39,7 +39,7 @@ const registerUser = async (req, res) => {
     if (result.err) {
       return result;
     }
-    return commandHandler.registerUser(payload);
+    return commandHandler.registerUser(validatePayload.data);
   };
   const sendResponse = async (result) => {
     /* eslint no-unused-expressions: [2, { allowTernary: true }] */
