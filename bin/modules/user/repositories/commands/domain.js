@@ -35,7 +35,7 @@ class User {
   }
 
   async register(payload) {
-    const { username, password } = payload;
+    const { username, password, isActive } = payload;
     const user = await query.findOneUser({ username });
 
     if (user.data) {
@@ -45,7 +45,8 @@ class User {
     const chiperPwd = await commonUtil.encrypt(password, algorithm, secretKey);
     const data = {
       username,
-      password: chiperPwd
+      password: chiperPwd,
+      isActive
     };
 
     const { data:result } = await command.insertOneUser(data);
