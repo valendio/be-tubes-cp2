@@ -55,7 +55,7 @@ const paginationResponse = (res, type, result, message = null, code = null) => {
   }
   res.send(result.code,
     {
-      status,
+      success: status,
       data: result.data,
       meta: result.meta,
       code: result.code,
