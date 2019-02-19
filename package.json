@@ -35,6 +35,7 @@
   "dependencies": {
     "aws-sdk": "^2.304.0",
     "confidence": "^3.0.2",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^6.1.0",
     "events": "1.1.1",
@@ -50,7 +51,6 @@
     "request": "^2.88.0",
     "request-promise": "4.2.2",
     "restify": "5.0.0",
-    "restify-cors-middleware": "^1.1.0",
     "restify-error": "1.0.0",
     "restify-errors": "5.0.0",
     "serve-static-restify": "^3.0.0",
