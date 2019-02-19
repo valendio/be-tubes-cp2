@@ -1,28 +1,11 @@
 
 const restify = require('restify');
-const corsMiddleware = require('restify-cors-middleware');
+const cors = require('cors');
 const project = require('../../package.json');
 const basicAuth = require('../auth/basic_auth_helper');
 const jwtAuth = require('../auth/jwt_auth_helper');
 const wrapper = require('../helpers/utils/wrapper');
 const userHandler = require('../modules/user/handlers/api_handler');
-
-const crossOrigin = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  if (req.method === 'OPTIONS') {
-    res.send(200);
-  }
-  return next();
-};
-
-const cors = corsMiddleware({
-  preflightMaxAge: 5, // Optional
-  origins: ['*'],
-  allowHeaders: ['Origin, X-Requested-With, Content-Type, Accept, OPTIONS'],
-  exposeHeaders: ['OPTIONS']
-});
 
 function AppServer() {
   this.server = restify.createServer({
@@ -31,16 +14,44 @@ function AppServer() {
   });
 
   this.server.serverKey = '';
-  this.server.pre(cors.preflight);
-  this.server.use(cors.actual);
   this.server.use(restify.plugins.acceptParser(this.server.acceptable));
   this.server.use(restify.plugins.queryParser());
   this.server.use(restify.plugins.bodyParser());
   this.server.use(restify.plugins.authorizationParser());
 
+  // required for CORS configuration
+  this.server.use(cors());
+  this.server.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+      res.send(200);
+    }
+    return next();
+  });
+  this.server.opts(/.*/, (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+      'Access-Control-Allow-Methods',
+      req.header('Access-Control-Request-Method')
+    );
+    res.header(
+      'Access-Control-Allow-Headers',
+      req.header('Access-Control-Request-Headers')
+    );
+    res.header('Access-Control-Expose-Headers', 'Authorization');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'GET, POST, PUT, DELETE, OPTIONS'
+    );
+    res.header(
+      'Access-Control-Allow-Headers',
+      'X-Requested-With,content-type,**Authorization**'
+    );
+    res.send(200);
+    return next();
+  });
+
   // required for basic auth
   this.server.use(basicAuth.init());
-  this.server.use(crossOrigin);
 
   // anonymous can access the end point, place code bellow
   this.server.get('/', (req, res) => {

@@ -3,11 +3,11 @@ const validate = require('validate.js');
 const wrapper = require('../../../helpers/utils/wrapper');
 
 const isValidPayload = (payload, constraint) => {
-  const { error } = joi.validate(payload, constraint);
+  const { value, error } = joi.validate(payload, constraint);
   if(!validate.isEmpty(error)){
     return wrapper.error('fail', error, 409);
   }
-  return wrapper.data('success', 'valid param', 200);
+  return wrapper.data(value, 'success', 200);
 
 };
 
