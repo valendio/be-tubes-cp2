@@ -38,6 +38,7 @@
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^6.1.0",
+    "elasticsearch": "^15.4.1",
     "events": "1.1.1",
     "joi": "^14.0.1",
     "jsftp": "2.0.0",
