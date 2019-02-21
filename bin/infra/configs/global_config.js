@@ -24,6 +24,15 @@ const config = {
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE
+  },
+  elasticsearch: {
+    connectionClass: process.env.ELASTICSEARCH_CONNECTION_CLASS,
+    apiVersion: process.env.ELASTICSEARCH_API_VERSION,
+    host: [
+      process.env.ELASTICSEARCH_HOST
+    ],
+    maxRetries: process.env.ELASTICSEARCH_MAX_RETRIES,
+    requestTimeout: process.env.ELASTICSEARCH_REQUEST_TIMEOUT
   }
 };
 
