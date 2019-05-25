@@ -52,8 +52,8 @@ const registerUser = async (req, res) => {
   };
   const sendResponse = async (result) => {
     /* eslint no-unused-expressions: [2, { allowTernary: true }] */
-    (result.err) ? wrapper.response(res, 'fail', result)
-      : wrapper.response(res, 'success', result, 'Your Request Has Been Processed');
+    (result.err) ? wrapper.response(res, 'fail', result, 'Register User', httpError.CONFLICT)
+      : wrapper.response(res, 'success', result, 'Register User', http.OK);
   };
   sendResponse(await postRequest(validatePayload));
 };

@@ -5,7 +5,6 @@ const wrapper = require('../../../../helpers/utils/wrapper');
 const jwtAuth = require('../../../../auth/jwt_auth_helper');
 const commonUtil = require('../../../../helpers/utils/common');
 const logger = require('../../../../helpers/utils/logger');
-const { ERROR: httpError } = require('../../../../helpers/http-status/status_code');
 
 const algorithm = 'aes-256-ctr';
 const secretKey = 'Dom@in2018';
@@ -39,7 +38,7 @@ class User {
     const user = await query.findOneUser({ username });
 
     if (user.data) {
-      return wrapper.error('error', 'user already exist', httpError.CONFLICT);
+      return wrapper.error('user already exist');
     }
 
     const chiperPwd = await commonUtil.encrypt(password, algorithm, secretKey);
@@ -50,7 +49,7 @@ class User {
     };
 
     const { data:result } = await command.insertOneUser(data);
-    return wrapper.data(result, 'register user successfull', 200);
+    return wrapper.data(result);
 
   }
 
