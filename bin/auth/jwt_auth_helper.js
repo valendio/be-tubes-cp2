@@ -32,6 +32,7 @@ const getToken = (headers) => {
 
 const verifyToken = async (req, res, next) => {
   const result = {
+    err: null,
     data: null
   };
   const publicKey = fs.readFileSync(config.get('/publicKey'), 'utf8');
@@ -43,6 +44,7 @@ const verifyToken = async (req, res, next) => {
 
   const token = getToken(req.headers);
   if (!token) {
+    result.err = 'Invalid token!';
     return wrapper.response(res, 'fail', result, 'Invalid token!', ERROR.FORBIDDEN);
   }
   let decodedToken;
@@ -50,13 +52,16 @@ const verifyToken = async (req, res, next) => {
     decodedToken = jwt.verify(token, publicKey, verifyOptions);
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
+      result.err = 'Access token expired!';
       return wrapper.response(res, 'fail', result, 'Access token expired!', ERROR.UNAUTHORIZED);
     }
+    result.err = 'Token is not valid!';
     return wrapper.response(res, 'fail', result, 'Token is not valid!', ERROR.UNAUTHORIZED);
   }
   const userId = decodedToken.sub;
   const user = userQuery.findById(userId);
   if (user.err) {
+    result.err = 'Invalid token!';
     wrapper.response(res, 'fail', result, 'Invalid token!', ERROR.FORBIDDEN);
   }
   req.userId = userId;

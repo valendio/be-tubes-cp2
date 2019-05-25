@@ -35,8 +35,8 @@ const getUser = async (req, res) => {
   const { userId } = req;
   const getData = async () => queryHandler.getUser(userId);
   const sendResponse = async (result) => {
-    (result.err) ? wrapper.response(res, 'fail', result)
-      : wrapper.response(res, 'success', result, 'Your Request Has Been Processed');
+    (result.err) ? wrapper.response(res, 'fail', result, 'Get User', httpError.NOT_FOUND)
+      : wrapper.response(res, 'success', result, 'Get User', http.OK);
   };
   sendResponse(await getData());
 };
