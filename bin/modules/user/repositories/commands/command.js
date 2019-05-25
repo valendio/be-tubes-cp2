@@ -1,14 +1,15 @@
 
-const Mongo = require('../../../../helpers/databases/mongodb/db');
-const config = require('../../../../infra/configs/global_config');
+class Command {
 
-const insertOneUser = async (document) => {
-  const db = new Mongo(config.get('/mongoDbUrl'));
-  db.setCollection('user');
-  const result = await db.insertOne(document);
-  return result;
-};
+  constructor(db) {
+    this.db = db;
+  }
 
-module.exports = {
-  insertOneUser
-};
+  async insertOneUser(document){
+    this.db.setCollection('user');
+    const result = await this.db.insertOne(document);
+    return result;
+  }
+}
+
+module.exports = Command;

@@ -1,6 +1,6 @@
 
-const query = require('../queries/query');
-const command = require('./command');
+const Query = require('../queries/query');
+const Command = require('./command');
 const wrapper = require('../../../../helpers/utils/wrapper');
 const jwtAuth = require('../../../../auth/jwt_auth_helper');
 const commonUtil = require('../../../../helpers/utils/common');
@@ -11,10 +11,15 @@ const secretKey = 'Dom@in2018';
 
 class User {
 
+  constructor(db){
+    this.command = new Command(db);
+    this.query = new Query(db);
+  }
+
   async generateCredential(payload) {
     const ctx = 'domain-generateCredential';
     const { username, password } = payload;
-    const user = await query.findOneUser({ username });
+    const user = await this.query.findOneUser({ username });
     if (user.err) {
       logger.log(ctx, user.err, 'user not found');
       return wrapper.error('user not found');
@@ -35,7 +40,7 @@ class User {
 
   async register(payload) {
     const { username, password, isActive } = payload;
-    const user = await query.findOneUser({ username });
+    const user = await this.query.findOneUser({ username });
 
     if (user.data) {
       return wrapper.error('user already exist');
@@ -48,7 +53,7 @@ class User {
       isActive
     };
 
-    const { data:result } = await command.insertOneUser(data);
+    const { data:result } = await this.command.insertOneUser(data);
     return wrapper.data(result);
 
   }

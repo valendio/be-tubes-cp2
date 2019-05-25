@@ -21,7 +21,7 @@ const postDataLogin = async (req, res) => {
       wrapper.response(res, 'fail', result, 'Login User', httpError.NOT_FOUND);
       break;
     case 'Username or password invalid!':
-      wrapper.response(res, 'fail', result, 'Login User', httpError.NOT_FOUND);
+      wrapper.response(res, 'fail', result, 'Login User', httpError.UNAUTHORIZED);
       break;
     default:
       wrapper.response(res, 'success', result, 'Login User', http.OK);
