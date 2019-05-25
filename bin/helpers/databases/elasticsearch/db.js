@@ -2,7 +2,7 @@ const validate = require('validate.js');
 
 const wrapper = require('../../utils/wrapper');
 const conn = require('./connection');
-const { ERROR } = require('../../http-error/custom_error');
+const { ERROR } = require('../../http-status/status_code');
 
 const beutifyResult = (payload) => {
   const { hits: { hits } } = payload;

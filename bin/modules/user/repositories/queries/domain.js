@@ -1,7 +1,7 @@
 
 const query = require('./query');
 const wrapper = require('../../../../helpers/utils/wrapper');
-const { ERROR: httpError } = require('../../../../helpers/http-error/custom_error');
+const { ERROR: httpError } = require('../../../../helpers/http-status/status_code');
 
 class User {
 

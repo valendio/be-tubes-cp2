@@ -1,65 +1,42 @@
 
-const data = (data, description = '', code = 200) => ( { err: null, message: description, data, code });
+const data = (data) => ({ err: null, data});
 
-const paginationData = (data, meta, description = '', code = 200) => ({ err: null, message: description, data, meta, code });
+const paginationData = (data, meta,) => ({ err: null, data, meta});
 
-const error = (err, description, code = 500) => ({ err, code, data: '', message: description });
+const error = (err) => ({ err, data: null });
 
-const response = (res, type, result, message, code) => {
-  /* eslint no-param-reassign: 2 */
-  if (message) {
-    result.message = message;
-  }
-  if (code) {
-    result.code = code;
-  }
-  let status;
-  switch (type) {
-  case 'fail':
+const response = (res, type, result, message = '', code = 200) => {
+  let status = true;
+  let data = result.data;
+  if(type === 'fail'){
     status = false;
-    break;
-  case 'success':
-    status = true;
-    break;
-  default:
-    status = true;
-    break;
+    data = '';
+    message = result.err;
   }
-  res.send(result.code,
+  res.send(code,
     {
       success: status,
-      data: result.data,
-      message: result.message,
-      code: result.code
+      data,
+      message,
+      code
     });
 };
 
-const paginationResponse = (res, type, result, message = null, code = null) => {
-  if (message) {
-    result.message = message;
+const paginationResponse = (res, type, result, message = '', code = 200) => {
+  let status = true;
+  let data = result.data;
+  if(type === 'fail'){
+    status = false;
+    data = '';
+    message = result.err;
   }
-  if (code) {
-    result.code = code;
-  }
-  let status;
-  switch (type) {
-  case 'fail':
-    status = 'fail';
-    break;
-  case 'success':
-    status = 'success';
-    break;
-  default:
-    status = 'error';
-    break;
-  }
-  res.send(result.code,
+  res.send(code,
     {
       success: status,
-      data: result.data,
+      data,
       meta: result.meta,
-      code: result.code,
-      message: result.message
+      code,
+      message
     }
   );
 };

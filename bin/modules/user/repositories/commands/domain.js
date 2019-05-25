@@ -5,7 +5,7 @@ const wrapper = require('../../../../helpers/utils/wrapper');
 const jwtAuth = require('../../../../auth/jwt_auth_helper');
 const commonUtil = require('../../../../helpers/utils/common');
 const logger = require('../../../../helpers/utils/logger');
-const { ERROR: httpError } = require('../../../../helpers/http-error/custom_error');
+const { ERROR: httpError } = require('../../../../helpers/http-status/status_code');
 
 const algorithm = 'aes-256-ctr';
 const secretKey = 'Dom@in2018';
@@ -18,20 +18,20 @@ class User {
     const user = await query.findOneUser({ username });
     if (user.err) {
       logger.log(ctx, user.err, 'user not found');
-      return wrapper.error('error', user.err, httpError.NOT_FOUND);
+      return wrapper.error('user not found');
     }
     const userId = user.data._id;
     const userName = user.data.username;
     const pass = await commonUtil.decrypt(user.data.password, algorithm, secretKey);
     if (username !== userName || pass !== password) {
-      return wrapper.error('error', 'Username or password invalid!', httpError.UNAUTHORIZED);
+      return wrapper.error('Username or password invalid!');
     }
     const data = {
       username,
       sub: userId
     };
     const token = await jwtAuth.generateToken(data);
-    return wrapper.data(token, '', 200);
+    return wrapper.data(token);
   }
 
   async register(payload) {

@@ -4,7 +4,7 @@ const fs = require('fs');
 const config = require('../infra/configs/global_config');
 const userQuery = require('../modules/user/repositories/queries/query');
 const wrapper = require('../helpers/utils/wrapper');
-const { ERROR } = require('../helpers/http-error/custom_error');
+const { ERROR } = require('../helpers/http-status/status_code');
 
 const getKey = keyPath => fs.readFileSync(keyPath, 'utf8');
 

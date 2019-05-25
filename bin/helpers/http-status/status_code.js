@@ -7,6 +7,12 @@ const ERROR = {
   'UNAUTHORIZED': 401
 };
 
+const SUCCESS = {
+  'OK': 200,
+  'CREATED': 201
+};
+
 module.exports = {
-  ERROR
+  ERROR,
+  SUCCESS
 };
