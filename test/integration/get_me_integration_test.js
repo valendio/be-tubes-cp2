@@ -11,25 +11,12 @@ describe('Get Me', () => {
   let appServer;
 
   let result = {
-    'success': true,
+    'err': false,
     'data': {
       '_id': '5bac53b45ea76b1e9bd58e1c',
       'username': 'alifsndev',
       'password': '8789ad457ac341e4fc4cad32'
-    },
-    'message': 'Your Request Has Been Processed',
-    'code': 200
-  };
-
-  let queryResult = {
-    'err': null,
-    'data': {
-      '_id': '5bac53b45ea76b1e9bd58e1c',
-      'username': 'alifsndev',
-      'password': '8789ad457ac341e4fc4cad32'
-    },
-    'message': 'Your Request Has Been Processed',
-    'code': 200
+    }
   };
 
   let decodedToken = {
@@ -94,26 +81,15 @@ describe('Get Me', () => {
   it('Should return no data for /api/v1/me', function (done) {
 
     result = {
-      'success': false,
-      'data': null,
-      'message': 'Your Request Failed to Process',
-      'code': 500
-    };
-
-    queryResult = {
       'err': true,
-      'data': null,
-      'message': 'Your Request Failed to Process',
-      'code': 500
+      'data': null
     };
 
-    sinon.stub(db.prototype, 'findOne').resolves(queryResult);
     sinon.stub(user.prototype, 'viewUser').resolves(result);
 
     hippie(this.server)
       .header('authorization', 'Bearer dGVsa29tOmRhMWMyNWQ4LTM3YzgtNDFiMS1hZmUyLTQyZGQ0ODI1YmZlYQ==')
       .get('/api/v1/me')
-      .expectStatus(500)
       .end((err, res, body) => {
 
         if(err){
@@ -121,10 +97,9 @@ describe('Get Me', () => {
         }
 
         const result = JSON.parse(body);
-        assert.equal(result.code, 500);
-        assert.equal(result.data, null);
+        assert.equal(result.code, 404);
+        assert.equal(result.data, '');
 
-        db.prototype.findOne.restore();
         user.prototype.viewUser.restore();
         done();
       });

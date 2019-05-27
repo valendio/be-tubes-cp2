@@ -1,8 +1,7 @@
 const assert = require('assert');
 const sinon = require('sinon');
 
-const command = require('../../../../../../bin/modules/user/repositories/commands/command');
-const Mongo = require('../../../../../../bin/helpers/databases/mongodb/db');
+const Command = require('../../../../../../bin/modules/user/repositories/commands/command');
 
 describe('User-command', () => {
 
@@ -13,17 +12,18 @@ describe('User-command', () => {
         '_id': '5bac53b45ea76b1e9bd58e1c',
         'username': 'alifsndev',
         'password': '8789ad457ac341e4fc4cad32'
-      },
-      'message': 'Your Request Has Been Processed',
-      'code': 200
+      }
     };
 
     it('should success to insert data to db', async() => {
-      sinon.stub(Mongo.prototype, 'insertOne').resolves(queryResult);
+
+      const db = {
+        insertOne: sinon.stub().resolves(queryResult),
+        setCollection: sinon.stub()
+      };
+      const command = new Command(db);
       const res = await command.insertOneUser({});
       assert.equal(res.data.username, queryResult.data.username);
-
-      Mongo.prototype.insertOne.restore();
     });
   });
 
