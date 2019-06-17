@@ -56,6 +56,7 @@
     "restify": "5.0.0",
     "restify-error": "1.0.0",
     "restify-errors": "5.0.0",
+    "rewire": "^4.0.1",
     "serve-static-restify": "^3.0.0",
     "util": "0.10.3",
     "uuid": "3.1.0",

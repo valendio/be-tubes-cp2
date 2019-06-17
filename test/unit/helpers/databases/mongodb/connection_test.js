@@ -1,8 +1,11 @@
-const mongoConnection = require('../../../../../bin/helpers/databases/mongodb/connection');
+const { expect } = require('chai');
 const mongo = require('mongodb').MongoClient;
 const sinon = require('sinon');
+
+const mongoConnection = require('../../../../../bin/helpers/databases/mongodb/connection');
 const config = require('../../../../../bin/infra/configs/global_config');
-const { expect } = require('chai');
+const logger = require('../../../../../bin/helpers/utils/logger');
+
 describe('Mongo Connection', () => {
   let stubMongoConnect;
   beforeEach(() => {
@@ -10,9 +13,11 @@ describe('Mongo Connection', () => {
     stubMongoConnect.resolves({
       isConnected: sinon.stub().returns(true)
     });
+    sinon.stub(logger, 'log');
   });
   afterEach(() => {
     stubMongoConnect.restore();
+    logger.log.restore();
   });
   it('should cover create mongo connection failed', () => {
     stubMongoConnect.restore();
