@@ -35,13 +35,13 @@ class DB {
       const db = connection.collection(this.collectionName);
       const recordset = await db.findOne(parameter);
       if (validate.isEmpty(recordset)) {
-        return wrapper.error('Data Not Found , Please Try Another Input');
+        return wrapper.error('Data Not Found Please Try Another Input');
       }
       return wrapper.data(recordset);
 
     } catch (err) {
       logger.log(ctx, err.message, 'Error find data in mongodb');
-      return wrapper.error(`Error Find One Mongo ${err.message}`, `${err.message}`);
+      return wrapper.error(`Error Find One Mongo ${err.message}`);
     }
 
   }
@@ -66,7 +66,7 @@ class DB {
 
     } catch (err) {
       logger.log(ctx, err.message, 'Error find data in mongodb');
-      return wrapper.error(`Error Find Many Mongo ${err.message}`, `${err.message}`);
+      return wrapper.error(`Error Find Many Mongo ${err.message}`);
     }
 
   }
@@ -87,11 +87,11 @@ class DB {
       if (recordset.result.n !== 1) {
         return wrapper.error('Failed Inserting Data to Database');
       }
-      return wrapper.data(document, 'created', 201);
+      return wrapper.data(document);
 
     } catch (err) {
       logger.log(ctx, err.message, 'Error insert data in mongodb');
-      return wrapper.error(`Error Insert One Mongo ${err.message}`, `${err.message}`);
+      return wrapper.error(`Error Insert One Mongo ${err.message}`);
     }
 
   }
@@ -117,11 +117,13 @@ class DB {
 
     } catch (err) {
       logger.log(ctx, err.message, 'Error insert data in mongodb');
-      return wrapper.error(`Error Insert Many Mongo ${err.message}`, `${err.message}`);
+      return wrapper.error(`Error Insert Many Mongo ${err.message}`);
     }
 
   }
 
+  // nModified : 0 => data created
+  // nModified : 1 => data updated
   async upsertOne(parameter, updateQuery) {
     const ctx = 'mongodb-upsertOne';
     const dbName = await this.getDatabase();
@@ -147,7 +149,7 @@ class DB {
       return wrapper.error('Failed upsert data');
     } catch (err) {
       logger.log(ctx, err.message, 'Error upsert data in mongodb');
-      return wrapper.error(`Error Upsert Mongo ${err.message}`, `${err.message}`);
+      return wrapper.error(`Error Upsert Mongo ${err.message}`);
     }
 
   }
@@ -170,7 +172,7 @@ class DB {
       const recordset = await db.find(param).sort(parameterSort).limit(row).skip(parameterPage)
         .toArray();
       if (validate.isEmpty(recordset)) {
-        return wrapper.error('Data Not Found', 'Please Try Another Input');
+        return wrapper.error('Data Not Found, Please Try Another Input');
       }
       return wrapper.data(recordset);
 
