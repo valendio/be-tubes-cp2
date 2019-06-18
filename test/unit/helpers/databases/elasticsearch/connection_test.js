@@ -28,8 +28,7 @@ describe('Elastic Connection', () => {
   });
   it('should cover branch condition create connection', async() => {
     const createConnection = connRewire.__get__('createConnection');
-    const res = await createConnection(esHost);
-    assert.equal(res, undefined);
+    await createConnection(esHost);
   });
   it('should get connection', async() => {
     const res = await connectionElastic.getConnection(esHost);

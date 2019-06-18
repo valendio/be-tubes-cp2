@@ -27,17 +27,17 @@ class DB {
               errorMessage = 'Database connection was refused.';
             }
             connection.release();
-            reject(wrapper.error(err.code, errorMessage, 503));
+            reject(wrapper.error(errorMessage));
           }
           else {
             connection.query(statement, (err, result) => {
               if (err) {
                 connection.release();
-                reject(wrapper.error(err.code, err.message, 503));
+                reject(wrapper.error(err.message));
               }
               else {
                 connection.release();
-                resolve(wrapper.data(JSON.stringify(result)));
+                resolve(wrapper.data(result));
               }
             });
           }
@@ -45,9 +45,9 @@ class DB {
       });
     };
     const result = await recordset().then(result => {
-      return wrapper.data(result);
+      return result;
     }).catch(err => {
-      return wrapper.error(err.code, err.message, 503);
+      return err;
     });
     return result;
   }
