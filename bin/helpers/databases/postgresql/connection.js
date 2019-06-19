@@ -1,13 +1,13 @@
 
-const pg = require('pg');
+const Postgre = require('pg');
 
-const connectionPool = [];
+let connectionPool = [];
 
 const createConnectionPool = async (config) => {
   const currConnection = connectionPool.findIndex(conf => conf.config.toString() === config.toString());
   let db;
   if(currConnection === -1){
-    db = new pg.Pool(config);
+    db = new Postgre.Pool(config);
     connectionPool.push({
       config,
       connection: db

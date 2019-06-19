@@ -37,8 +37,6 @@ describe('Mysql DB', () => {
       .equal(true);
   });
   it('should create a new conn', async () => {
-    stubConnection.restore();
-    stubConnection = sinon.stub(mysqlConnection, 'getConnection');
     stubConnection.resolves({});
     let expectedResultGetConn = {
       release: sinon.spy(),
@@ -53,8 +51,6 @@ describe('Mysql DB', () => {
     expect(await db.query('')).to.be.an('object');
   });
   it('expect query to be error', async () => {
-    stubConnection.restore();
-    stubConnection = sinon.stub(mysqlConnection, 'getConnection');
     stubConnection.resolves({
       getConnection: sinon.stub().yields(null, {
         release: sinon.spy(),
@@ -68,8 +64,6 @@ describe('Mysql DB', () => {
       .equal('error');
   });
   it('should cover the error branches on getting connection conn lost', async () => {
-    stubConnection.restore();
-    stubConnection = sinon.stub(mysqlConnection, 'getConnection');
     stubConnection.resolves({
       getConnection: sinon.stub().yields({
         code: 'PROTOCOL_CONNECTION_LOST'
@@ -83,8 +77,6 @@ describe('Mysql DB', () => {
       .equal('Database connection was closed.');
   });
   it('should cover the error branches on getting connection count err', async () => {
-    stubConnection.restore();
-    stubConnection = sinon.stub(mysqlConnection, 'getConnection');
     stubConnection.resolves({
       getConnection: sinon.stub().yields({
         code: 'ER_CON_COUNT_ERROR'
@@ -98,8 +90,6 @@ describe('Mysql DB', () => {
       .equal('Database has too many connections.');
   });
   it('should cover the error branches on getting connection refused', async () => {
-    stubConnection.restore();
-    stubConnection = sinon.stub(mysqlConnection, 'getConnection');
     stubConnection.resolves({
       getConnection: sinon.stub().yields({
         code: 'ECONNREFUSED'
