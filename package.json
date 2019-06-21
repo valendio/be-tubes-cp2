@@ -35,6 +35,7 @@
   "homepage": "https://gitlab.playcourt.id/telkomdev/api-mockup-management#readme",
   "dependencies": {
     "aws-sdk": "^2.304.0",
+    "azure-storage": "^2.10.3",
     "confidence": "^3.0.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",

@@ -16,11 +16,14 @@ const postDataLogin = async (req, res) => {
     return commandHandler.postDataLogin(result.data);
   };
   const sendResponse = async (result) => {
-    switch (result.err) {
-    case 'user not found':
+    switch (true) {
+    case !result.err:
+      wrapper.response(res, 'success', result, 'Login User', http.OK);
+      break;
+    case result.err.toLowerCase().includes('user not found'):
       wrapper.response(res, 'fail', result, 'Login User', httpError.NOT_FOUND);
       break;
-    case 'Username or password invalid!':
+    case result.err.toLowerCase().includes('password invalid!'):
       wrapper.response(res, 'fail', result, 'Login User', httpError.UNAUTHORIZED);
       break;
     default:

@@ -28,7 +28,7 @@ class User {
     const userName = user.data.username;
     const pass = await commonUtil.decrypt(user.data.password, algorithm, secretKey);
     if (username !== userName || pass !== password) {
-      return wrapper.error('Username or password invalid!');
+      return wrapper.error('Password invalid!');
     }
     const data = {
       username,
