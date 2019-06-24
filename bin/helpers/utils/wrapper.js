@@ -1,7 +1,7 @@
 
 const data = (data) => ({ err: null, data});
 
-const paginationData = (data, meta,) => ({ err: null, data, meta});
+const paginationData = (data, meta) => ({ err: null, data, meta});
 
 const error = (err) => ({ err, data: null });
 
