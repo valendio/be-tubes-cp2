@@ -474,59 +474,6 @@ describe('Mongodb', () => {
       assert.equal(res.data.data, 'data');
       stubDb.restore();
     });
-    //     it('should return wrapper error when get connection error', async () => {
-    //       stubMongoConn.restore();
-    //       stubMongoConn = sinon.stub(mongoConnection, 'getConnection');
-    //       stubMongoConn.resolves({
-    //         err: {
-    //           messages: 'error'
-    //         },
-    //         code: 500
-    //       });
-    //       expect(await Mongo.prototype.countData({})).to.haveOwnProperty('code').equal(500);
-    //       expect(await Mongo.prototype.countData({})).to.haveOwnProperty('err').to.be.an('object');
-    //     });
-    //     it('should return wrapper error when db function is error', async () => {
-    //       stubMongoConn.restore();
-    //       stubMongoConn = sinon.stub(mongoConnection, 'getConnection');
-    //       stubMongoConn.resolves({
-    //         err: null,
-    //         data: {
-    //           db: {
-    //             db: sinon.stub().callsFake(() => sinon.stub().rejects(new Error('Error Db function')))
-    //           }
-    //         }
-    //       });
-    //       expect(await Mongo.prototype.countData({})).to.haveOwnProperty('code').equal(409);
-    //       expect(await Mongo.prototype.countData({})).to.haveOwnProperty('err').not.equal('');
-    //     });
-    //     it('should return wrapper erre when countData not success', async () => {
-    //       stubDb.returns({
-    //         collection : () => {
-    //           return {
-    //             count: sinon.stub().callsFake(() => {
-    //               return Promise.resolve();
-    //             })
-    //           };
-    //         }
-    //       });
-    //       expect(await Mongo.prototype.countData({})).to.haveOwnProperty('code').equal(404);
-    //       stubDb.restore();
-    //     });
-
-  //     it('should return wrapper data when countData success', async () => {
-  //       stubDb.returns({
-  //         collection : () => {
-  //           return {
-  //             count: sinon.stub().callsFake(() => {
-  //               return Promise.resolve(100);
-  //             })
-  //           };
-  //         }
-  //       });
-  //       expect(await Mongo.prototype.countData({})).to.haveOwnProperty('data').to.be.a('number');
-  //       stubDb.restore();
-  //     });
   });
 
 });

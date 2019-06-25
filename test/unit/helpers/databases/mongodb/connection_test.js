@@ -8,6 +8,7 @@ const logger = require('../../../../../bin/helpers/utils/logger');
 
 describe('Mongo Connection', () => {
   let stubMongoConnect;
+
   beforeEach(() => {
     stubMongoConnect = sinon.stub(mongo, 'connect');
     stubMongoConnect.resolves({
@@ -15,13 +16,19 @@ describe('Mongo Connection', () => {
     });
     sinon.stub(logger, 'log');
   });
+
   afterEach(() => {
     stubMongoConnect.restore();
     logger.log.restore();
   });
+
+  it('should cover branch condition isConnected', async() => {
+    stubMongoConnect.rejects({
+      message: 'test fail connect'
+    });
+    await mongoConnection.getConnection(config.get('/mongoDbUrl'));
+  });
   it('should cover create mongo connection failed', () => {
-    stubMongoConnect.restore();
-    stubMongoConnect = sinon.stub(mongo, 'connect');
     stubMongoConnect.rejects({
       message: 'test fail connect'
     });
