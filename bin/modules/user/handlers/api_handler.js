@@ -27,7 +27,7 @@ const postDataLogin = async (req, res) => {
       wrapper.response(res, 'fail', result, 'Login User', httpError.UNAUTHORIZED);
       break;
     default:
-      wrapper.response(res, 'success', result, 'Login User', http.OK);
+      wrapper.response(res, 'fail', result, 'Login User', httpError.CONFLICT);
       break;
     }
   };
