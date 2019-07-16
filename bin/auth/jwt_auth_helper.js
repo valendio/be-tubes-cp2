@@ -49,7 +49,7 @@ const verifyToken = async (req, res, next) => {
   }
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, publicKey, verifyOptions);
+    decodedToken = await jwt.verify(token, publicKey, verifyOptions);
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
       result.err = 'Access token expired!';
