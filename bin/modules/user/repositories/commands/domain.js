@@ -5,6 +5,7 @@ const wrapper = require('../../../../helpers/utils/wrapper');
 const jwtAuth = require('../../../../auth/jwt_auth_helper');
 const commonUtil = require('../../../../helpers/utils/common');
 const logger = require('../../../../helpers/utils/logger');
+const { NotFoundError, UnauthorizedError, ConflictError } = require('../../../../helpers/error');
 
 const algorithm = 'aes-256-ctr';
 const secretKey = 'Dom@in2018';
@@ -22,13 +23,13 @@ class User {
     const user = await this.query.findOneUser({ username });
     if (user.err) {
       logger.log(ctx, user.err, 'user not found');
-      return wrapper.error('user not found');
+      return wrapper.error(new NotFoundError('user not found'));
     }
     const userId = user.data._id;
     const userName = user.data.username;
     const pass = await commonUtil.decrypt(user.data.password, algorithm, secretKey);
     if (username !== userName || pass !== password) {
-      return wrapper.error('Password invalid!');
+      return wrapper.error(new UnauthorizedError('Password invalid!'));
     }
     const data = {
       username,
@@ -43,7 +44,7 @@ class User {
     const user = await this.query.findOneUser({ username });
 
     if (user.data) {
-      return wrapper.error('user already exist');
+      return wrapper.error(new ConflictError('user already exist'));
     }
 
     const chiperPwd = await commonUtil.encrypt(password, algorithm, secretKey);

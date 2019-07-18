@@ -5,6 +5,7 @@ const config = require('../infra/configs/global_config');
 const { getUser } = require('../modules/user/repositories/queries/query_handler');
 const wrapper = require('../helpers/utils/wrapper');
 const { ERROR } = require('../helpers/http-status/status_code');
+const { UnauthorizedError, ForbiddenError } = require('../helpers/error');
 
 const getKey = keyPath => fs.readFileSync(keyPath, 'utf8');
 
@@ -44,7 +45,7 @@ const verifyToken = async (req, res, next) => {
 
   const token = getToken(req.headers);
   if (!token) {
-    result.err = 'Invalid token!';
+    result.err = new ForbiddenError('Invalid token!');
     return wrapper.response(res, 'fail', result, 'Invalid token!', ERROR.FORBIDDEN);
   }
   let decodedToken;
@@ -52,16 +53,16 @@ const verifyToken = async (req, res, next) => {
     decodedToken = await jwt.verify(token, publicKey, verifyOptions);
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      result.err = 'Access token expired!';
+      result.err = new UnauthorizedError('Access token expired!');
       return wrapper.response(res, 'fail', result, 'Access token expired!', ERROR.UNAUTHORIZED);
     }
-    result.err = 'Token is not valid!';
+    result.err = new UnauthorizedError('Token is not valid!');
     return wrapper.response(res, 'fail', result, 'Token is not valid!', ERROR.UNAUTHORIZED);
   }
   const userId = decodedToken.sub;
   const user = getUser(userId);
   if (user.err) {
-    result.err = 'Invalid token!';
+    result.err = new ForbiddenError('Invalid token!');
     wrapper.response(res, 'fail', result, 'Invalid token!', ERROR.FORBIDDEN);
   }
   req.userId = userId;

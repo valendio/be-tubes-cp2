@@ -1,6 +1,7 @@
 
 const Query = require('./query');
 const wrapper = require('../../../../helpers/utils/wrapper');
+const { NotFoundError } = require('../../../../helpers/error');
 
 class User {
 
@@ -11,7 +12,7 @@ class User {
   async viewUser(userId) {
     const user = await this.query.findById(userId);
     if (user.err) {
-      return wrapper.error('Can not find user');
+      return wrapper.error(new NotFoundError('Can not find user'));
     }
     const { data } = user;
     return wrapper.data(data);

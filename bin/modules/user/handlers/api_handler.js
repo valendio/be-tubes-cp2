@@ -15,21 +15,10 @@ const postDataLogin = async (req, res) => {
     }
     return commandHandler.postDataLogin(result.data);
   };
+
   const sendResponse = async (result) => {
-    switch (true) {
-    case !result.err:
-      wrapper.response(res, 'success', result, 'Login User', http.OK);
-      break;
-    case result.err.toLowerCase().includes('user not found'):
-      wrapper.response(res, 'fail', result, 'Login User', httpError.NOT_FOUND);
-      break;
-    case result.err.toLowerCase().includes('password invalid!'):
-      wrapper.response(res, 'fail', result, 'Login User', httpError.UNAUTHORIZED);
-      break;
-    default:
-      wrapper.response(res, 'fail', result, 'Login User', httpError.CONFLICT);
-      break;
-    }
+    (result.err) ? wrapper.response(res, 'fail', result, 'Login User')
+      : wrapper.response(res, 'success', result, 'Login User', http.OK);
   };
   sendResponse(await postRequest(validatePayload));
 };
