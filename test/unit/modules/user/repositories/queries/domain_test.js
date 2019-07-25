@@ -42,7 +42,7 @@ describe('viewUser', () => {
     const result = await user.viewUser(userId);
 
     query.prototype.findById.restore();
-    assert.equal(result.err, 'Can not find user');
+    assert.equal(result.err.message, 'Can not find user');
 
   });
 });
