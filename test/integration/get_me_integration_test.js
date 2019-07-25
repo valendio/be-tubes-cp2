@@ -97,7 +97,7 @@ describe('Get Me', () => {
         }
 
         const result = JSON.parse(body);
-        assert.equal(result.code, 409);
+        assert.equal(result.code, 403);
         assert.equal(result.data, '');
 
         user.prototype.viewUser.restore();

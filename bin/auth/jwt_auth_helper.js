@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const config = require('../infra/configs/global_config');
-const { getUser } = require('../modules/user/repositories/queries/query_handler');
+const queryUser = require('../modules/user/repositories/queries/query_handler');
 const wrapper = require('../helpers/utils/wrapper');
 const { ERROR } = require('../helpers/http-status/status_code');
 const { UnauthorizedError, ForbiddenError } = require('../helpers/error');
@@ -60,7 +60,7 @@ const verifyToken = async (req, res, next) => {
     return wrapper.response(res, 'fail', result, 'Token is not valid!', ERROR.UNAUTHORIZED);
   }
   const userId = decodedToken.sub;
-  const user = getUser(userId);
+  const user = await queryUser.getUser(userId);
   if (user.err) {
     result.err = new ForbiddenError('Invalid token!');
     wrapper.response(res, 'fail', result, 'Invalid token!', ERROR.FORBIDDEN);

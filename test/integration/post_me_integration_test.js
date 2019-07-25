@@ -48,6 +48,15 @@ describe('Login Me', () => {
       .end(done);
   });
 
+  it('Should error when post data for /api/v1/me', function (done) {
+    hippie(this.server)
+      .header('authorization','Basic dGVsa29tMTIzOmRhMWMyNWQ4LTM3YzgtNDFiMS1hZmUyLTQyZGQ0ODI1YmZlYQ==')
+      .post('/api/v1/me')
+      .send()
+      .expectStatus(401)
+      .end(done);
+  });
+
   it('Should return posted data for /api/v1/me', function (done) {
 
     sinon.stub(commandHandler, 'postDataLogin').resolves(result);
