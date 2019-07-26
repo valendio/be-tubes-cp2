@@ -10,8 +10,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "junit": "_mocha \"test/**/*_test.js\" --timeout=5000 --reporter mocha-junit-reporter",
-    "test": "mocha \"test/**/*_test.js\" --timeout=5000",
-    "cover": "nyc _mocha \"test/**/*_test.js\" --recursive",
+    "test": "mocha \"test/**/*_test.js\" --timeout=5000 --exit",
+    "cover": "nyc _mocha \"test/**/*_test.js\" --recursive --exit",
     "slint": "sonarlint --src 'bin/**' --tests 'test/**'",
     "lint": "eslint bin test",
     "lint:fix": "npm run lint -- --fix"
