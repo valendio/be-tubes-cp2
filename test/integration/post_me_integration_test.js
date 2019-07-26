@@ -40,24 +40,24 @@ describe('Login Me', () => {
     this.server.close();
   });
 
-  it('Should error when post data for /api/v1/me', function (done) {
+  it('Should error when post data for /api/users/v1', function (done) {
     hippie(this.server)
-      .post('/api/v1/me')
+      .post('/api/users/v1')
       .send()
       .expectStatus(401)
       .end(done);
   });
 
-  it('Should error when post data for /api/v1/me', function (done) {
+  it('Should error when post data for /api/users/v1', function (done) {
     hippie(this.server)
       .header('authorization','Basic dGVsa29tMTIzOmRhMWMyNWQ4LTM3YzgtNDFiMS1hZmUyLTQyZGQ0ODI1YmZlYQ==')
-      .post('/api/v1/me')
+      .post('/api/users/v1')
       .send()
       .expectStatus(401)
       .end(done);
   });
 
-  it('Should return posted data for /api/v1/me', function (done) {
+  it('Should return posted data for /api/users/v1', function (done) {
 
     sinon.stub(commandHandler, 'postDataLogin').resolves(result);
 
@@ -65,7 +65,7 @@ describe('Login Me', () => {
     hippie(this.server)
       .header('authorization','Basic dGVsa29tOmRhMWMyNWQ4LTM3YzgtNDFiMS1hZmUyLTQyZGQ0ODI1YmZlYQ==')
       .json()
-      .post('/api/v1/me')
+      .post('/api/users/v1')
       .send(payload)
       .expectStatus(201)
       .end((err, res, body) => {

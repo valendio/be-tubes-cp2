@@ -39,11 +39,11 @@ describe('Get Me', () => {
     jwt.verify.restore();
   });
 
-  it('Should error when view user for /api/v1/me', function (done) {
+  it('Should error when view user for /api/users/v1', function (done) {
 
     hippie(this.server)
       .header('authorization','')
-      .get('/api/v1/me')
+      .get('/api/users/v1')
       .expectStatus(403)
       .end((err, res, body) => {
         if(err){
@@ -53,14 +53,14 @@ describe('Get Me', () => {
       });
   });
 
-  it('Should return data for /api/v1/me', function (done) {
+  it('Should return data for /api/users/v1', function (done) {
 
     sinon.stub(db.prototype, 'findOne').resolves(result);
     sinon.stub(user.prototype, 'viewUser').resolves(result);
 
     hippie(this.server)
       .header('authorization', 'Bearer dGVsa29tOmRhMWMyNWQ4LTM3YzgtNDFiMS1hZmUyLTQyZGQ0ODI1YmZlYQ==')
-      .get('/api/v1/me')
+      .get('/api/users/v1')
       .expectStatus(200)
       .end((err, res, body) => {
 
@@ -78,7 +78,7 @@ describe('Get Me', () => {
       });
   });
 
-  it('Should return no data for /api/v1/me', function (done) {
+  it('Should return no data for /api/users/v1', function (done) {
 
     result = {
       'err': true,
@@ -89,7 +89,7 @@ describe('Get Me', () => {
 
     hippie(this.server)
       .header('authorization', 'Bearer dGVsa29tOmRhMWMyNWQ4LTM3YzgtNDFiMS1hZmUyLTQyZGQ0ODI1YmZlYQ==')
-      .get('/api/v1/me')
+      .get('/api/users/v1')
       .end((err, res, body) => {
 
         if(err){

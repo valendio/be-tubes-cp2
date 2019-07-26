@@ -14,7 +14,7 @@ describe('Root', () => {
     this.server.close();
   });
 
-  it('Should error when view user for /api/v1/me', function (done) {
+  it('Should access root service', function (done) {
 
     hippie(this.server)
       .get('/')
