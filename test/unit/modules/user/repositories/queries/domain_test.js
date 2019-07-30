@@ -6,6 +6,12 @@ const assert = require('assert');
 
 describe('viewUser', () => {
 
+  const db = {
+    setCollection: sinon.stub()
+  };
+
+  const user = new User(db);
+
   it('should return user data', async() => {
 
     let queryResult = {
@@ -20,7 +26,6 @@ describe('viewUser', () => {
     sinon.stub(query.prototype, 'findById').resolves(queryResult);
 
     const userId = '5bac53b45ea76b1e9bd58e1c';
-    const user = new User();
     const result = await user.viewUser(userId);
 
     query.prototype.findById.restore();
@@ -38,7 +43,6 @@ describe('viewUser', () => {
     sinon.stub(query.prototype, 'findById').resolves(queryResult);
 
     const userId = '5bac53b45ea76b1e9bd58e1c';
-    const user = new User();
     const result = await user.viewUser(userId);
 
     query.prototype.findById.restore();

@@ -25,6 +25,12 @@ describe('User-domain', () => {
     'password': 'telkomdev123'
   };
 
+  const db = {
+    setCollection: sinon.stub()
+  };
+
+  const user = new User(db);
+
   const token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9';
 
   before(() => {
@@ -41,7 +47,6 @@ describe('User-domain', () => {
       sinon.stub(query.prototype, 'findOneUser').resolves(queryResult);
       sinon.stub(jwtAuth, 'generateToken').resolves(token);
 
-      const user = new User();
       const res = await user.generateCredential(payload);
       assert.equal(res.data, token);
 
@@ -52,7 +57,6 @@ describe('User-domain', () => {
     it('should return error', async() => {
       sinon.stub(query.prototype, 'findOneUser').resolves({ err: 'err'});
 
-      const user = new User();
       const res = await user.generateCredential(payload);
       assert.notEqual(res.err, null);
 
@@ -68,7 +72,6 @@ describe('User-domain', () => {
 
       sinon.stub(query.prototype, 'findOneUser').resolves(queryResult);
 
-      const user = new User();
       const res = await user.generateCredential(payload);
       assert.notEqual(res.err, null);
 
@@ -82,7 +85,6 @@ describe('User-domain', () => {
       sinon.stub(query.prototype, 'findOneUser').resolves({ data: null});
       sinon.stub(command.prototype, 'insertOneUser').resolves(queryResult);
 
-      const user = new User();
       const res = await user.register(payload);
       assert.equal(res.data.username, 'alifsndev');
 
@@ -93,7 +95,6 @@ describe('User-domain', () => {
     it('should return error', async() => {
       sinon.stub(query.prototype, 'findOneUser').resolves(queryResult);
 
-      const user = new User();
       const res = await user.register(payload);
       assert.notEqual(res.err, null);
 
