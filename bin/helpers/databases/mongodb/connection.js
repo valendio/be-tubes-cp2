@@ -23,7 +23,7 @@ const createConnection = async (config) => {
     return wrapper.data(connection);
   } catch (err) {
     logger.log('connection-createConnection', err, 'error');
-    return wrapper.error(err, err.message, 503);
+    return wrapper.error(err.message);
   }
 };
 
@@ -59,7 +59,7 @@ const ifExistConnection = async (config) => {
     return state;
   });
   if (validate.isEmpty(state)) {
-    return wrapper.error('Connection Not Exist', 'Connection Must be Created Before', 404);
+    return wrapper.error('Connection Not Exist, Connection Must be Created Before');
   }
   return wrapper.data(state);
 
@@ -68,7 +68,7 @@ const ifExistConnection = async (config) => {
 const isConnected = async (state) => {
   const connection = state.db;
   if (!connection.isConnected()) {
-    return wrapper.error('Connection Not Found', 'Connection Must be Created Before', 404, state);
+    return wrapper.error('Connection Not Found, Connection Must be Created Before');
   }
   return wrapper.data(state);
 };

@@ -22,7 +22,7 @@ class DB {
           if (err) {
             client.release();
             logger.log('db-query', err, 'processing query ...');
-            reject(wrapper.error(err.code, err.message, 503));
+            reject(wrapper.error(err.message));
           }
           else {
             client.release();
@@ -33,9 +33,9 @@ class DB {
       });
     };
     const result = await recordset().then(result => {
-      return wrapper.data(result.data);
+      return result;
     }).catch(err => {
-      return wrapper.error('fail', err, 503);
+      return err;
     });
     return result;
   }
@@ -56,16 +56,16 @@ class DB {
         } catch (error) {
           logger.log('db-command', error, 'processing command ...');
           await client.query('ROLLBACK');
-          reject(wrapper.error('fail', error, 503));
+          reject(wrapper.error(error));
         } finally {
           client.release();
         }
       });
     };
     const result = await recordset().then(result => {
-      return wrapper.data(result);
+      return result;
     }).catch(err => {
-      return wrapper.error('fail', err, 503);
+      return err;
     });
     return result;
   }

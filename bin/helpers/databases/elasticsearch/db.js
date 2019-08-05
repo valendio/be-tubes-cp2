@@ -2,7 +2,6 @@ const validate = require('validate.js');
 
 const wrapper = require('../../utils/wrapper');
 const conn = require('./connection');
-const { ERROR } = require('../../http-error/custom_error');
 
 const beutifyResult = (payload) => {
   const { hits: { hits } } = payload;
@@ -13,223 +12,190 @@ const beutifyResult = (payload) => {
 const createIndex = async (config, payload) => {
   let esClient = await conn.getConnection(config);
   let result = new Promise((resolve, reject) => {
-    esClient.indices.create(payload, (error, response, status) => {
+    esClient.indices.create(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
-    .then(res => wrapper.data(res.response, 'index crated', res.status))
-    .catch(err => wrapper.error('fail', 'failed to create index', err.statusCode));
+    .then(res => wrapper.data(res))
+    .catch(err => wrapper.error(`failed to create index, ${err}`));
 };
 
 const getAllIndex = async (config, idx) => {
   let esClient = await conn.getConnection(config);
   let result = new Promise((resolve, reject) => {
-    esClient.cat.indices({}, (error, response, status) => {
+    esClient.cat.indices({}, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
-    .then(res => wrapper.data(res.response, 'index crated', res.status))
-    .catch(err => wrapper.error('fail', 'failed to create index', err.statusCode));
+    .then(res => wrapper.data(res))
+    .catch(err => wrapper.error(`failed to create index, ${err}`));
 };
 
-const insertElastiSearch = async (config, payload) => {
+const insertData = async (config, payload) => {
   let esClient = await conn.getConnection(config);
   let result = new Promise((resolve, reject) => {
-    esClient.index(payload, (error, response, status) => {
+    esClient.index(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
-    .then(res => wrapper.data(res.response, 'index crated', res.status))
-    .catch(err => wrapper.error('fail', 'failed to create index', err.statusCode));
+    .then(res => wrapper.data(res))
+    .catch(err => wrapper.error(`failed to create index, ${err}`));
 };
 
 const countData = async (config, payload) => {
   let esClient = await conn.getConnection(config);
   let result = new Promise((resolve, reject) => {
-    esClient.count(payload, (error, response, status) => {
+    esClient.count(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
-    .then(res => wrapper.data(res.response, 'Success Count data', res.status))
-    .catch(err => wrapper.error('fail', 'failed to count data', err.statusCode));
+    .then(res => wrapper.data(res))
+    .catch(err => wrapper.error(`failed to count data, ${err}`));
 };
 
 const deleteData = async (config, payload) => {
   let esClient = await conn.getConnection(config);
   let result = new Promise((resolve, reject) => {
-    esClient.delete(payload, (error, response, status) => {
+    esClient.delete(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
-    .then(res => wrapper.data(res.response, 'Success delete data', res.status))
-    .catch(err => wrapper.error('fail', 'failed to delete data', err.statusCode));
+    .then(res => wrapper.data(res))
+    .catch(err => wrapper.error(`failed to delete data, ${err}`));
 };
 
 const updateData = async (config, payload) => {
   const esClient = await conn.getConnection(config);
   const result = new Promise((resolve, reject) => {
-    esClient.index(payload, (error, response, status) => {
+    esClient.update(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
-    .then(res => wrapper.data(res.response, 'Success update data', res.status))
-    .catch(err => wrapper.error('fail', 'failed to update data', err.statusCode));
+    .then(res => wrapper.data(res))
+    .catch(err => wrapper.error(`failed to update data, ${err}`));
 };
 
 const findOne = async (config, payload) => {
   const esClient = await conn.getConnection(config);
   const result = new Promise((resolve, reject) => {
-    esClient.search(payload, (error, response, status) => {
+    esClient.search(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
     .then(res => {
-      const data = beutifyResult(res.response).shift();
+      const data = beutifyResult(res).shift();
       if(validate.isEmpty(data)){
-        return wrapper.error('fail', 'failed to find data', ERROR.NOT_FOUND);
+        return wrapper.error('failed to find data');
       }
-      return wrapper.data(data, 'Successfully find data', res.status);
+      return wrapper.data(data);
     }).catch(err => {
-      return wrapper.error('fail', 'failed to find data', err.statusCode);
+      return wrapper.error(`failed to find data, ${err}`);
     });
 };
 
 const findAll = async (config, payload) => {
   const esClient = await conn.getConnection(config);
   const result = new Promise((resolve, reject) => {
-    esClient.search(payload, (error, response, status) => {
+    esClient.search(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
     .then(res => {
-      const data = beutifyResult(res.response);
+      const data = beutifyResult(res);
       if(validate.isEmpty(data)){
-        return wrapper.data(data, 'Empty data', res.status);
+        return wrapper.data(data);
       }
-      return wrapper.data(data, 'Successfully find data', res.status);
+      return wrapper.data(data);
     }).catch(err => {
-      return wrapper.error('fail', 'failed to find data', err.statusCode);
+      return wrapper.error(`failed to find data, ${err}`);
     });
 };
 
 const insertMany = async (config, payload) => {
   let esClient = await conn.getConnection(config);
   let result = new Promise((resolve, reject) => {
-    esClient.bulk(payload, (error, response, status) => {
+    esClient.bulk(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
-    .then(res => wrapper.data(res.response, 'Successfully insert all data', res.status))
-    .catch(err => wrapper.error('fail', 'failed to insert all data', err.statusCode));
+    .then(res => wrapper.data(res))
+    .catch(err => wrapper.error(`failed to insert all data, ${err}`));
 };
 
 const clearScroll = async (config, payload) => {
   let esClient = await conn.getConnection(config);
   let result = new Promise((resolve, reject) => {
-    esClient.clearScroll(payload, (error, response, status) => {
+    esClient.clearScroll(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
-    .then(res => wrapper.data(res.response, 'Successfully scroll data', res.status))
-    .catch(err => wrapper.error('fail', 'failed to scroll data', err.statusCode));
+    .then(res => wrapper.data(res))
+    .catch(err => wrapper.error(`failed to scroll data, ${err}`));
 };
 
 const sugesters = async (config, payload) => {
   let esClient = await conn.getConnection(config);
   let result = new Promise((resolve, reject) => {
-    esClient.search(payload, (error, response, status) => {
+    esClient.search(payload, (error, response) => {
       if (error) {
         reject(error);
       }
-      resolve({
-        response: response,
-        status: status
-      });
+      resolve(response);
     });
   });
   return Promise.resolve(result)
     .then(res => {
-      const data = beutifyResult(res.response);
-      return wrapper.data(data, 'Successfully find data', res.status);
+      const data = beutifyResult(res);
+      return wrapper.data(data);
     }).catch(err => {
-      return wrapper.error('fail', 'failed to find data', err.statusCode);
+      return wrapper.error(`failed to find data, ${err}`);
     });
 };
 
 module.exports = {
   createIndex,
   getAllIndex,
-  insertElastiSearch,
+  insertData,
   countData,
   deleteData,
   updateData,
