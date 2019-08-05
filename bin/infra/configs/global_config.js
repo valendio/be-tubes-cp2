@@ -24,6 +24,25 @@ const config = {
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE
+  },
+  elasticsearch: {
+    connectionClass: process.env.ELASTICSEARCH_CONNECTION_CLASS,
+    apiVersion: process.env.ELASTICSEARCH_API_VERSION,
+    host: [
+      process.env.ELASTICSEARCH_HOST
+    ],
+    maxRetries: process.env.ELASTICSEARCH_MAX_RETRIES,
+    requestTimeout: process.env.ELASTICSEARCH_REQUEST_TIMEOUT
+  },
+  postgreConfig:{
+    host: process.env.POSTGRES_HOST,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DATABASE,
+    port: process.env.POSTGRES_PORT,
+    max:  parseInt(process.env.POSTGRES_MAX),
+    idleTimeoutMillis: parseInt(process.env.POSTGRES_TIMEOUT)
+
   }
 };
 

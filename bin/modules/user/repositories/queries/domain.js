@@ -1,17 +1,21 @@
 
-const query = require('./query');
+const Query = require('./query');
 const wrapper = require('../../../../helpers/utils/wrapper');
-const { ERROR: httpError } = require('../../../../helpers/http-error/custom_error');
+const { NotFoundError } = require('../../../../helpers/error');
 
 class User {
 
+  constructor(db){
+    this.query = new Query(db);
+  }
+
   async viewUser(userId) {
-    const user = await query.findById(userId);
+    const user = await this.query.findById(userId);
     if (user.err) {
-      return wrapper.error('error', 'Can not find user!', httpError.NOT_FOUND);
+      return wrapper.error(new NotFoundError('Can not find user'));
     }
     const { data } = user;
-    return wrapper.data(data, '', 200);
+    return wrapper.data(data);
   }
 
 }
