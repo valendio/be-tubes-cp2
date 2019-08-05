@@ -1,26 +1,26 @@
 
-const Mongo = require('../../../../helpers/databases/mongodb/db');
-const config = require('../../../../infra/configs/global_config');
 const ObjectId = require('mongodb').ObjectId;
 
-const findOneUser = async (parameter) => {
-  const db = new Mongo(config.get('/mongoDbUrl'));
-  db.setCollection('user');
-  const recordset = await db.findOne(parameter);
-  return recordset;
-};
+class Query {
 
-const findById = async (id) => {
-  const db = new Mongo(config.get('/mongoDbUrl'));
-  db.setCollection('user');
-  const parameter = {
-    _id: ObjectId(id)
-  };
-  const recordset = await db.findOne(parameter);
-  return recordset;
-};
+  constructor(db) {
+    this.db = db;
+    this.db.setCollection('user');
+  }
 
-module.exports = {
-  findOneUser,
-  findById
-};
+  async findOneUser(parameter) {
+    const recordset = await this.db.findOne(parameter);
+    return recordset;
+  }
+
+  async findById(id) {
+    const parameter = {
+      _id: ObjectId(id)
+    };
+    const recordset = await this.db.findOne(parameter);
+    return recordset;
+  }
+
+}
+
+module.exports = Query;
