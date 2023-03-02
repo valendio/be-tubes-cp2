@@ -34,6 +34,15 @@ class Product {
     const { data } = product;
     return wrapper.data(data);
   }
+
+  async getProductByIdCategories(id_categories) {
+    const product = await this.query.findByCategoryid(id_categories);
+    if (product.err) {
+      return wrapper.error(new NotFoundError("Can not find Product"));
+    }
+    const { data } = product;
+    return wrapper.data(data);
+  }
 }
 
 module.exports = Product;

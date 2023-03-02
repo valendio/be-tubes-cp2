@@ -12,6 +12,7 @@ const product = joi.object({
   price: joi.string().required(),
   details: joi.string().required(),
   isActive: joi.boolean().default(true, "Example If Need Default Value"),
+  id_categories: joi.number().required(),
 });
 
 module.exports = {

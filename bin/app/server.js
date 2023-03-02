@@ -65,6 +65,12 @@ function AppServer() {
     productHandler.getProductById,
   )
 
+  this.server.get(
+    "/api/products/getproductByIdCategories/:id_categories",
+    basicAuth.isAuthenticated,
+    productHandler.getProductByIdCategories,
+  )
+
   //Initiation
   mysqlConnectionPooling.getConnection();
 }

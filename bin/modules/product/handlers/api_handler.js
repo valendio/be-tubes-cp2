@@ -85,6 +85,23 @@ const getProductById = async (req, res) => {
   sendResponse(await getData());
 };
 
+const getProductByIdCategories = async (req, res) => {
+  const { id_categories } = req.params;
+  const getData = (async) => queryHandler.getProductByIdCategories(id_categories);
+  const sendResponse = async (result) => {
+    result.err
+      ? wrapper.response(
+          res,
+          "fail",
+          result,
+          "Get Product",
+          httpError.NOT_FOUND
+        )
+      : wrapper.response(res, "success", result, "Get Product", http.OK);
+  };
+  sendResponse(await getData());
+};
+
 
 const createProduct = async (req, res) => {
   const payload = req.body;
@@ -116,4 +133,5 @@ module.exports = {
   getProductById,
   getAllProducts,
   createProduct,
+  getProductByIdCategories,
 };

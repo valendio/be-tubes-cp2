@@ -13,10 +13,10 @@ class Command {
   // }
 
   async insertProduct(document) {
-    const { name, categories, price, details, isActive } = document;
+    const { name, categories, price, details, isActive, id_categories } = document;
     const result = await this.db.prepareQuery(
-      "INSERT INTO produk (name, categories, price, details, isActive) VALUES (?,?,?,?,?)",
-      [name, categories, price, details, isActive]
+      "INSERT INTO produk (name, categories, price, details, isActive, id_categories) VALUES (?,?,?,?,?,?)",
+      [name, categories, price, details, isActive, id_categories]
     );
     return result;
   }

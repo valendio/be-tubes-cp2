@@ -23,6 +23,15 @@ const getProductById = async (id) => {
   return result;
 };
 
+const getProductByIdCategories = async (id_categories) => {
+  const getData = async () => {
+    const result = await product.getProductByIdCategories(id_categories);
+    return result;
+  };
+  const result = await getData();
+  return result;
+};
+
 module.exports = {
-  getAllProduct, getProductById
+  getAllProduct, getProductById, getProductByIdCategories
 };

@@ -40,6 +40,17 @@ class Query {
     // return recordset;
   }
 
+  async findByCategoryid(id_categories) {
+    const recordset = await this.db.prepareQuery('SELECT * FROM produk WHERE id_categories = ?', id_categories);
+    return recordset;
+    // this.db.setCollection('product');
+    // const parameter = {
+    //   _id: ObjectId(id)
+    // };
+    // const recordset = await this.db.findOne(parameter);
+    // return recordset;
+  }
+
   // async findByCategory(category) {
   //   const recordset = await this.db.prepareQuery('SELECT * FROM produk WHERE id = ?', category);
   //   return recordset;

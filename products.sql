@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Mar 2023 pada 16.23
+-- Waktu pembuatan: 02 Mar 2023 pada 16.53
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -33,18 +33,20 @@ CREATE TABLE `produk` (
   `categories` varchar(128) NOT NULL,
   `price` varchar(256) NOT NULL,
   `details` varchar(1000) NOT NULL,
-  `isActive` tinyint(1) NOT NULL
+  `isActive` tinyint(1) NOT NULL,
+  `id_categories` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `produk`
 --
 
-INSERT INTO `produk` (`id`, `name`, `categories`, `price`, `details`, `isActive`) VALUES
-(1, 'Aoka', 'alat Tulis', 'Rp.15.000', 'alat tulis murah', 1),
-(2, 'Pulpen', 'alat Tulis', 'Rp.15.000', 'alat tulis biasa', 1),
-(3, 'penghapus', 'alat tulis', 'Rp.7.000', 'alat tulis biasa', 1),
-(4, 'jam tangan', 'jajanan pasar', 'Rp.20.000', 'ngga ada detailsnya', 1);
+INSERT INTO `produk` (`id`, `name`, `categories`, `price`, `details`, `isActive`, `id_categories`) VALUES
+(1, 'Aoka', 'alat Tulis', 'Rp.15.000', 'alat tulis murah', 1, 1),
+(2, 'Pulpen', 'alat Tulis', 'Rp.15.000', 'alat tulis biasa', 1, 1),
+(3, 'penghapus', 'alat tulis', 'Rp.7.000', 'alat tulis biasa', 1, 1),
+(4, 'jam tangan', 'jajanan pasar', 'Rp.20.000', 'ngga ada detailsnya', 1, 2),
+(5, 'jam tangan', 'jajanan pasar', 'Rp.20.000', 'ngga ada detailsnya', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -54,7 +56,8 @@ INSERT INTO `produk` (`id`, `name`, `categories`, `price`, `details`, `isActive`
 -- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK1` (`id_categories`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -64,7 +67,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
