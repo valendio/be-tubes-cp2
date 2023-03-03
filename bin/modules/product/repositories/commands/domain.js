@@ -8,6 +8,7 @@ class Product {
     this.command = new Command(db);
     this.query = new Query(db);
   }
+  
   async create(payload) {
     const ctx = "domain-postProduct";
 
@@ -19,6 +20,19 @@ class Product {
     return wrapper.data(result);
   }
 
+  async delete(id) {
+    const ctx = "domain-deleteProduct";
+  
+    const { data: result } = await this.command.deleteOneProduct(id);
+    if (result.err) {
+      logger.log(ctx, "error", "error");
+      return wrapper.error(new InternalServerError("Failed to delete product"));
+    }
+    return wrapper.data(result);
+}
+
+
+  
 
 
   // async generateCredential(payload) {
@@ -63,10 +77,7 @@ class Product {
 
   // }
 
-  async delete(payload) {
-    const { payload: result } = await this.command.deleteOneProduct(payload);
-    return wrapper.data(result);
-  }
+
 }
 
 module.exports = Product;

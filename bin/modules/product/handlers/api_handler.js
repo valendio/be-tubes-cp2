@@ -77,7 +77,7 @@ const getProductById = async (req, res) => {
           res,
           "fail",
           result,
-          "Get Product",
+          "Get Product by ID",
           httpError.NOT_FOUND
         )
       : wrapper.response(res, "success", result, "Get Product", http.OK);
@@ -94,7 +94,7 @@ const getProductByIdCategories = async (req, res) => {
           res,
           "fail",
           result,
-          "Get Product",
+          "Get Product by Category",
           httpError.NOT_FOUND
         )
       : wrapper.response(res, "success", result, "Get Product", http.OK);
@@ -129,9 +129,27 @@ const createProduct = async (req, res) => {
   sendResponse(await postRequest(validatePayload));
 };
 
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+  const getData = (async) => commandHandler.deleteProduct(id);
+  const sendResponse = async (result) => {
+    result.err
+      ? wrapper.response(
+          res,
+          "fail",
+          result,
+          "Product deleted successfully",
+          httpError.NOT_FOUND
+        )
+      : wrapper.response(res, "success", result, "Delete Product", http.OK);
+  };
+  sendResponse(await getData());
+};
+
 module.exports = {
   getProductById,
   getAllProducts,
   createProduct,
   getProductByIdCategories,
+  deleteProduct
 };

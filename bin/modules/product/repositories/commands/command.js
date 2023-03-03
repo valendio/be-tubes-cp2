@@ -27,9 +27,8 @@ class Command {
     return result;
   }
 
-  async deleteOneProduct(document) {
-    this.db.setCollection("product");
-    const result = await this.db.deleteOne(document);
+  async deleteOneProduct(id) {
+    const result = await this.db.prepareQuery("DELETE FROM produk WHERE id = ?", id);
     return result;
   }
 }

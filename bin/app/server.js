@@ -71,6 +71,12 @@ function AppServer() {
     productHandler.getProductByIdCategories,
   )
 
+  this.server.del(
+    "/api/products/deleteProduct/:id",
+    basicAuth.isAuthenticated,
+    productHandler.deleteProduct,
+  )
+
   //Initiation
   mysqlConnectionPooling.getConnection();
 }

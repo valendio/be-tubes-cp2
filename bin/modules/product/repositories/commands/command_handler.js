@@ -21,10 +21,10 @@ const insertProduct = async (payload) => {
   return postCommand(payload);
 };
 
-const deleteProduct = async (payload) => {
+const deleteProduct = async (id) => {
   const product = new Product(db);
-  const postCommand = async (payload) => product.delete(payload);
-  return postCommand(payload);
+  const postCommand = async (id) => product.delete(id);
+  return postCommand(id);
 };
 
 module.exports = {
