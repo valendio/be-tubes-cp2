@@ -31,6 +31,16 @@ class Command {
     const result = await this.db.prepareQuery("DELETE FROM produk WHERE id = ?", id);
     return result;
   }
+
+  
+ async updateOneProduct(document, id) {
+  const { name, categories, price, details, id_categories } = document;
+  const result = await this.db.prepareQuery(
+    "UPDATE produk SET name = ?, categories = ?, price = ?, details = ?, id_categories = ? WHERE id = ?",
+    [name, categories, price, details, id_categories, id]
+  );
+  return result;
+}
 }
 
 module.exports = Command;

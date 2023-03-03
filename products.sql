@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Mar 2023 pada 06.57
+-- Waktu pembuatan: 03 Mar 2023 pada 14.18
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -42,8 +42,9 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id`, `name`, `categories`, `price`, `details`, `isActive`, `id_categories`) VALUES
-(1, 'Pisang Goreng', 'jajanan pasar', 'Rp.15.000', 'Pisang Goreng enak', 1, 1),
-(2, 'Pisang Goreng', 'jajanan pasar', 'Rp.15.000', 'Pisang Goreng enak', 1, 1);
+(1, 'ayam bakar', 'makanan berat', 'Rp. 25.000', 'Makanan Berat banget', 1, 1),
+(2, 'Pisang Goreng', 'jajanan pasar', 'Rp.15.000', 'Pisang Goreng enak', 1, 1),
+(3, 'Jagung Bakar', 'Makanan Ringan', 'Rp. 7000', 'Makanan Berat banget', 1, 3);
 
 --
 -- Indexes for dumped tables
@@ -64,7 +65,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -22,17 +22,24 @@ class Product {
 
   async delete(id) {
     const ctx = "domain-deleteProduct";
-  
+    
     const { data: result } = await this.command.deleteOneProduct(id);
     if (result.err) {
       logger.log(ctx, "error", "error");
       return wrapper.error(new InternalServerError("Failed to delete product"));
     }
     return wrapper.data(result);
+
+  
+  }
+
+async update(id,payload) {
+  const ctx = "domain-updateProduct";
+  const { data: result } = await this.command.updateOneProduct(id ,payload);
+  return wrapper.data(result);
 }
 
 
-  
 
 
   // async generateCredential(payload) {

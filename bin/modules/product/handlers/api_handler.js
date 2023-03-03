@@ -146,10 +146,47 @@ const deleteProduct = async (req, res) => {
   sendResponse(await getData());
 };
 
+const UpdateProduct = async (req, res) => {
+  const { id } = req.params;
+  const payload = req.body;
+  const postRequest = async (result, id) => commandHandler.UpdateProduct(result, id);
+  const sendResponse = async (result) => {
+    result.err
+      ? wrapper.response(
+          res,
+          "fail",
+          result,
+          "Product Update successfully",
+          httpError.NOT_FOUND
+        )
+      : wrapper.response(res, "success", result, "Update Product", http.OK);
+  };
+  sendResponse(await postRequest(payload, id));
+};
+
+// const updateUlasan = async (req, res) => {
+//   const { id } = req.params;
+//   const payload = req.body;
+//   const postRequest = async (result, id) => {
+//     if (result.err) {
+//       return result;
+//     }
+//     return commandHandler.updateUlasan(result, id);
+//   };
+//   const sendResponse = async (result) => {
+//     result.err
+//       ? wrapper.response(res, "fail", result, "Update Ulasan Cancel", httpError.NOT_FOUND)
+//       : wrapper.response(res, "success", result, "Update Ulasan", http.OK);
+//   };
+//   sendResponse(await postRequest(payload, id))
+// }
+
+
 module.exports = {
   getProductById,
   getAllProducts,
   createProduct,
   getProductByIdCategories,
-  deleteProduct
+  deleteProduct,
+  UpdateProduct,
 };

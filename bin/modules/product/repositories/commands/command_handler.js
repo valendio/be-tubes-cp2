@@ -27,7 +27,15 @@ const deleteProduct = async (id) => {
   return postCommand(id);
 };
 
+const UpdateProduct = async (payload, id) => {
+  const product = new Product(db);
+  const postCommand = async (payload, id) => product.update(payload, id);
+  return postCommand(payload, id);
+};
+
+
 module.exports = {
   insertProduct,
   deleteProduct,
+  UpdateProduct,
 };

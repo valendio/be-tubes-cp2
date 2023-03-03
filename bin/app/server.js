@@ -46,7 +46,7 @@ function AppServer() {
     );
   });
 
-  // authenticated client can access the end point, place code bellow
+  //content
   this.server.post(
     "/api/products/v1",
     basicAuth.isAuthenticated,
@@ -77,6 +77,11 @@ function AppServer() {
     productHandler.deleteProduct,
   )
 
+  this.server.put(
+    "/api/products/updateProduct/:id",
+    basicAuth.isAuthenticated,
+    productHandler.UpdateProduct,
+  )
   //Initiation
   mysqlConnectionPooling.getConnection();
 }
