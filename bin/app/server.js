@@ -6,6 +6,7 @@ const jwtAuth = require("../auth/jwt_auth_helper");
 const wrapper = require("../helpers/utils/wrapper");
 const userHandler = require("../modules/user/handlers/api_handler");
 const productHandler = require("../modules/product/handlers/api_handler");
+const productHandlerMongo = require("../modules/product_mongo/handlers/api_handler");
 const mongoConnectionPooling = require("../helpers/databases/mongodb/connection");
 const mysqlConnectionPooling = require("../helpers/databases/mysql/connection");
 
@@ -46,44 +47,102 @@ function AppServer() {
     );
   });
 
-  //content
+  //CONTENT USER 
+    // this.server.post(
+  //   "/api/users/v1",
+  //   basicAuth.isAuthenticated,
+  //   userHandler.postDataLogin
+  // );
+  // this.server.get("/api/users/v1", jwtAuth.verifyToken, userHandler.getUser);
+
+  // this.server.post(
+  //   "/api/users/v1/register",
+  //   basicAuth.isAuthenticated,
+  //   userHandler.registerUser
+  // );
+
+  // CONTENT MONGODB
+
   this.server.post(
     "/api/products/v1",
     basicAuth.isAuthenticated,
-    productHandler.createProduct
+    productHandlerMongo.createProduct
   );
 
   this.server.get(
     "/api/products/getAllProducts",
     basicAuth.isAuthenticated,
-    productHandler.getAllProducts,
-  )
+    productHandlerMongo.getAllProduct
+  );
 
   this.server.get(
-    "/api/products/getproductById/:id",
+    "/api/products/getProductById/:id",
     basicAuth.isAuthenticated,
-    productHandler.getProductById,
-  )
-
-  this.server.get(
-    "/api/products/getproductByIdCategories/:id_categories",
-    basicAuth.isAuthenticated,
-    productHandler.getProductByIdCategories,
-  )
+    productHandlerMongo.getProductById
+  );
 
   this.server.del(
     "/api/products/deleteProduct/:id",
     basicAuth.isAuthenticated,
-    productHandler.deleteProduct,
+    productHandlerMongo.deleteProduct
   )
 
   this.server.put(
     "/api/products/updateProduct/:id",
     basicAuth.isAuthenticated,
-    productHandler.UpdateProduct,
+    productHandlerMongo.updateProduct
   )
-  //Initiation
-  mysqlConnectionPooling.getConnection();
+
+  //CONTENT MYSQL
+
+  // this.server.post(
+  //   "/api/products/v1",
+  //   basicAuth.isAuthenticated,
+  //   productHandler.createProduct
+  // );
+
+  // this.server.get(
+  //   "/api/products/getAllProducts",
+  //   basicAuth.isAuthenticated,
+  //   productHandler.getAllProducts,
+  // )
+
+  // this.server.get(
+  //   "/api/products/getproductById/:id",
+  //   basicAuth.isAuthenticated,
+  //   productHandler.getProductById,
+  // )
+
+  // this.server.get(
+  //   "/api/products/getproductByIdCategories/:id_categories",
+  //   basicAuth.isAuthenticated,
+  //   productHandler.getProductByIdCategories,
+  // )
+
+  // this.server.get(
+  //   "/api/products/pagination",
+  //   basicAuth.isAuthenticated,
+  //   productHandler.paginationProducts,
+  // );
+
+  // this.server.del(
+  //   "/api/products/deleteProduct/:id",
+  //   basicAuth.isAuthenticated,
+  //   productHandler.deleteProduct,
+  // )
+
+  // this.server.put(
+  //   "/api/products/updateProduct/:id",
+  //   basicAuth.isAuthenticated,
+  //   productHandler.UpdateProduct,
+  // )
+
+  //Initiation MYSQL Server
+  // mysqlConnectionPooling.getConnection();
+
+  //Initiation MONGODB Server
+  mongoConnectionPooling.init();
+
 }
 
 module.exports = AppServer;

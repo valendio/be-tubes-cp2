@@ -164,22 +164,30 @@ const UpdateProduct = async (req, res) => {
   sendResponse(await postRequest(payload, id));
 };
 
-// const updateUlasan = async (req, res) => {
-//   const { id } = req.params;
-//   const payload = req.body;
-//   const postRequest = async (result, id) => {
-//     if (result.err) {
-//       return result;
-//     }
-//     return commandHandler.updateUlasan(result, id);
-//   };
-//   const sendResponse = async (result) => {
-//     result.err
-//       ? wrapper.response(res, "fail", result, "Update Ulasan Cancel", httpError.NOT_FOUND)
-//       : wrapper.response(res, "success", result, "Update Ulasan", http.OK);
-//   };
-//   sendResponse(await postRequest(payload, id))
-// }
+const paginationProducts = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 2;
+  const offset = (page - 1) * limit;
+
+  const getData = async () => queryHandler.getPaginatedProducts(limit, offset);
+  const getTotalCount = async () => queryHandler.getProductCount();
+
+  const [result, totalCount] = await Promise.all([getData(), getTotalCount()]);
+
+  const meta = {
+    totalData: totalCount,
+    currentPage: page,
+    perPage: limit,
+  };
+
+  wrapper.paginationResponse(
+    res,
+    "success",
+    { data: result, meta },
+    "Get Paginated Products",
+    http.OK
+  );
+};
 
 
 module.exports = {
@@ -189,4 +197,5 @@ module.exports = {
   getProductByIdCategories,
   deleteProduct,
   UpdateProduct,
+  paginationProducts,
 };

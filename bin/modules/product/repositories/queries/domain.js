@@ -43,6 +43,25 @@ class Product {
     const { data } = product;
     return wrapper.data(data);
   }
+
+  async Pagination(limit, offset) {
+    const product = await this.query.Pagination(limit, offset);
+
+    // validation
+    const { data } = product;
+    return wrapper.data(data);
+  }
+
+  async viewCount() {
+    const product = await this.query.findCount();
+
+    // validation
+    const { data } = product;
+    return wrapper.data(data);
+  }
+
+
+
 }
 
 module.exports = Product;

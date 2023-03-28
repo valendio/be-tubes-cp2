@@ -1,28 +1,7 @@
 
 const ObjectId = require('mysql').ObjectId;
 
-// class Query {
 
-  // constructor(db) {
-  //   this.db = db;
-  // }
-
-  // async findOneUser(parameter) {
-  //   this.db.setCollection('user');
-  //   const recordset = await this.db.findOne(parameter);
-  //   return recordset;
-  // }
-
-  // async findById(id) {
-  //   this.db.setCollection('user');
-  //   const parameter = {
-  //     _id: ObjectId(id)
-  //   };
-  //   const recordset = await this.db.findOne(parameter);
-  //   return recordset;
-  // }
-
-  // query buat tugas
 
 class Query {
   constructor(db) {
@@ -32,35 +11,28 @@ class Query {
   async findById(id) {
     const recordset = await this.db.prepareQuery('SELECT * FROM produk WHERE id = ?', id);
     return recordset;
-    // this.db.setCollection('product');
-    // const parameter = {
-    //   _id: ObjectId(id)
-    // };
-    // const recordset = await this.db.findOne(parameter);
-    // return recordset;
   }
 
   async findByCategoryid(id_categories) {
     const recordset = await this.db.prepareQuery('SELECT * FROM produk WHERE id_categories = ?', id_categories);
     return recordset;
-    // this.db.setCollection('product');
-    // const parameter = {
-    //   _id: ObjectId(id)
-    // };
-    // const recordset = await this.db.findOne(parameter);
-    // return recordset;
+
   }
 
-  // async findByCategory(category) {
-  //   const recordset = await this.db.prepareQuery('SELECT * FROM produk WHERE id = ?', category);
-  //   return recordset;
-  //   // this.db.setCollection('product');
-  //   // const parameter = {
-  //   //   _id: ObjectId(id)
-  //   // };
-  //   // const recordset = await this.db.findOne(parameter);
-  //   // return recordset;
-  // }
+  async Pagination(limit, offset) {
+    const recordSet = await this.db.prepareQuery(
+      "SELECT * FROM produk LIMIT ? OFFSET ?",
+      [limit, offset]
+    );
+    return recordSet;
+  }
+
+  async findCount() {
+    const recordSet = await this.db.prepareQuery(
+      "SELECT COUNT(*) as total FROM produk"
+    );
+    return recordSet;
+  }
 
   async findAll() {
     const recordset = await this.db.prepareQuery('SELECT * FROM produk ');

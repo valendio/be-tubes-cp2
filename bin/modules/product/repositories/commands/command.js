@@ -21,11 +21,6 @@ class Command {
     return result;
   }
 
-  async updateOneProduct(document) {
-    this.db.setCollection("product");
-    const result = await this.db.updateOne(document);
-    return result;
-  }
 
   async deleteOneProduct(id) {
     const result = await this.db.prepareQuery("DELETE FROM produk WHERE id = ?", id);
@@ -40,7 +35,11 @@ class Command {
     [name, categories, price, details, id_categories, id]
   );
   return result;
+  
+  
 }
+
+
 }
 
 module.exports = Command;

@@ -23,6 +23,26 @@ const getProductById = async (id) => {
   return result;
 };
 
+const getPaginatedProducts = async (limit, offset) => {
+  const getData = async () => {
+    const result = await product.Pagination(limit, offset);
+    return result;
+  };
+
+  const result = await getData();
+  return result;
+};
+
+const getProductCount = async () => {
+  const getData = async () => {
+    const result = await product.viewCount();
+    return result;
+  };
+
+  const result = await getData();
+  return result;
+};
+
 const getProductByIdCategories = async (id_categories) => {
   const getData = async () => {
     const result = await product.getProductByIdCategories(id_categories);
@@ -33,5 +53,5 @@ const getProductByIdCategories = async (id_categories) => {
 };
 
 module.exports = {
-  getAllProduct, getProductById, getProductByIdCategories
+  getAllProduct, getProductById, getProductByIdCategories, getPaginatedProducts,getProductCount,
 };
