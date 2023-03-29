@@ -12,12 +12,11 @@ class Command {
     return result;
   }
 
-  async updateOneProduct(id) {
+  async updateOneProduct(id, payload) {
     this.db.setCollection("product");
-    const parameter = {
-      _id: ObjectId(id)
-    };
-    const result = await this.db.updateOne(id);
+    const parameter = ({
+      _id: ObjectId(id)}, {$set: payload});
+    const result = await this.db.upsertOne(parameter);
     return result;
   }
 

@@ -140,7 +140,7 @@ function AppServer() {
   // )
 
   // Initiation MYSQL Server
-  // mysqlConnectionPooling.getConnection();
+  mysqlConnectionPooling.getConnection();
 
   //Initiation MONGODB Server
   mongoConnectionPooling.init();
