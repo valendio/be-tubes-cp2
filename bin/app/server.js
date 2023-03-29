@@ -48,48 +48,50 @@ function AppServer() {
   });
 
   //CONTENT USER 
-    // this.server.post(
-  //   "/api/users/v1",
-  //   basicAuth.isAuthenticated,
-  //   userHandler.postDataLogin
-  // );
-  // this.server.get("/api/users/v1", jwtAuth.verifyToken, userHandler.getUser);
+  
+  this.server.post(
+    "/api/users/v1",
+    basicAuth.isAuthenticated,
+    userHandler.postDataLogin
+  );
 
-  // this.server.post(
-  //   "/api/users/v1/register",
-  //   basicAuth.isAuthenticated,
-  //   userHandler.registerUser
-  // );
+  this.server.get("/api/users/v1", jwtAuth.verifyToken, userHandler.getUser);
+
+  this.server.post(
+    "/api/users/v1/register",
+    basicAuth.isAuthenticated,
+    userHandler.registerUser
+  );
 
   // CONTENT MONGODB
 
   this.server.post(
     "/api/products/v1",
-    basicAuth.isAuthenticated,
+    jwtAuth.verifyToken,
     productHandlerMongo.createProduct
   );
 
   this.server.get(
     "/api/products/getAllProducts",
-    basicAuth.isAuthenticated,
+    jwtAuth.verifyToken,
     productHandlerMongo.getAllProduct
   );
 
   this.server.get(
     "/api/products/getProductById/:id",
-    basicAuth.isAuthenticated,
+    jwtAuth.verifyToken,
     productHandlerMongo.getProductById
   );
 
   this.server.del(
     "/api/products/deleteProduct/:id",
-    basicAuth.isAuthenticated,
+    jwtAuth.verifyToken,
     productHandlerMongo.deleteProduct
   )
 
   this.server.put(
     "/api/products/updateProduct/:id",
-    basicAuth.isAuthenticated,
+    jwtAuth.verifyToken,
     productHandlerMongo.updateProduct
   )
 
@@ -97,47 +99,47 @@ function AppServer() {
 
   // this.server.post(
   //   "/api/products/v1",
-  //   basicAuth.isAuthenticated,
+  //   jwtAuth.verifyToken,
   //   productHandler.createProduct
   // );
 
   // this.server.get(
   //   "/api/products/getAllProducts",
-  //   basicAuth.isAuthenticated,
+  //   jwtAuth.verifyToken,
   //   productHandler.getAllProducts,
   // )
 
   // this.server.get(
   //   "/api/products/getproductById/:id",
-  //   basicAuth.isAuthenticated,
+  //   jwtAuth.verifyToken,
   //   productHandler.getProductById,
   // )
 
   // this.server.get(
   //   "/api/products/getproductByIdCategories/:id_categories",
-  //   basicAuth.isAuthenticated,
+  //   jwtAuth.verifyToken,
   //   productHandler.getProductByIdCategories,
   // )
 
   // this.server.get(
-  //   "/api/products/pagination",
-  //   basicAuth.isAuthenticated,
-  //   productHandler.paginationProducts,
+  //   "/api/products/pagination/:page",
+  //   jwtAuth.verifyToken,
+  //   productHandler.pagination,
   // );
 
   // this.server.del(
   //   "/api/products/deleteProduct/:id",
-  //   basicAuth.isAuthenticated,
+  //   jwtAuth.verifyToken,
   //   productHandler.deleteProduct,
-  // )
+  // );
 
   // this.server.put(
   //   "/api/products/updateProduct/:id",
-  //   basicAuth.isAuthenticated,
+  //   jwtAuth.verifyToken,
   //   productHandler.UpdateProduct,
   // )
 
-  //Initiation MYSQL Server
+  // Initiation MYSQL Server
   // mysqlConnectionPooling.getConnection();
 
   //Initiation MONGODB Server

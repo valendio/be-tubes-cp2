@@ -8,50 +8,6 @@ const {
   SUCCESS: http,
 } = require("../../../helpers/http-status/status_code");
 
-// const postDataLogin = async (req, res) => {
-//   const payload = req.body;
-//   const validatePayload = validator.isValidPayload(payload, commandModel.login);
-//   const postRequest = async (result) => {
-//     if (result.err) {
-//       return result;
-//     }
-//     return commandHandler.postDataLogin(result.data);
-//   };
-
-//   const sendResponse = async (result) => {
-//     (result.err) ? wrapper.response(res, 'fail', result, 'Login User')
-//       : wrapper.response(res, 'success', result, 'Login User', http.OK);
-//   };
-//   sendResponse(await postRequest(validatePayload));
-// };
-
-// const getUser = async (req, res) => {
-//   const { userId } = req;
-//   const getData = async () => queryHandler.getUser(userId);
-//   const sendResponse = async (result) => {
-//     (result.err) ? wrapper.response(res, 'fail', result, 'Get User', httpError.NOT_FOUND)
-//       : wrapper.response(res, 'success', result, 'Get User', http.OK);
-//   };
-//   sendResponse(await getData());
-// };
-
-// const registerUser = async (req, res) => {
-//   const payload = req.body;
-//   const validatePayload = validator.isValidPayload(payload, commandModel.login);
-//   const postRequest = async (result) => {
-//     if (result.err) {
-//       return result;
-//     }
-//     return commandHandler.registerUser(result.data);
-//   };
-//   const sendResponse = async (result) => {
-//     /* eslint no-unused-expressions: [2, { allowTernary: true }] */
-//     (result.err) ? wrapper.response(res, 'fail', result, 'Register User', httpError.CONFLICT)
-//       : wrapper.response(res, 'success', result, 'Register User', http.OK);
-//   };
-//   sendResponse(await postRequest(validatePayload));
-// };
-
 const getAllProducts = async (req, res) => {
   const getData = (async) => queryHandler.getAllProduct();
   const sendResponse = async (result) => {
@@ -164,31 +120,16 @@ const UpdateProduct = async (req, res) => {
   sendResponse(await postRequest(payload, id));
 };
 
-const paginationProducts = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 2;
-  const offset = (page - 1) * limit;
-
-  const getData = async () => queryHandler.getPaginatedProducts(limit, offset);
-  const getTotalCount = async () => queryHandler.getProductCount();
-
-  const [result, totalCount] = await Promise.all([getData(), getTotalCount()]);
-
-  const meta = {
-    totalData: totalCount,
-    currentPage: page,
-    perPage: limit,
+const pagination = async (req, res) => {
+  const { page } = req.params;
+  const getData = async => queryHandler.getPagination(page);
+  const sendResponse = async (result) => {
+    result.err
+      ? wrapper.response(res, "fail", result, "Get Product Failed", httpError.NOT_FOUND)
+      : wrapper.response(res, "success", result, "Get Product", http.OK);
   };
-
-  wrapper.paginationResponse(
-    res,
-    "success",
-    { data: result, meta },
-    "Get Paginated Products",
-    http.OK
-  );
+  sendResponse(await getData())
 };
-
 
 module.exports = {
   getProductById,
@@ -197,5 +138,5 @@ module.exports = {
   getProductByIdCategories,
   deleteProduct,
   UpdateProduct,
-  paginationProducts,
+  pagination,
 };

@@ -19,12 +19,14 @@ class Query {
 
   }
 
-  async Pagination(limit, offset) {
+  async Pagination(payload) {
+    const page = (payload - 1) * 5
+
     const recordSet = await this.db.prepareQuery(
-      "SELECT * FROM produk LIMIT ? OFFSET ?",
-      [limit, offset]
-    );
-    return recordSet;
+      `SELECT * FROM produk LIMIT 5 OFFSET ?`, 
+      [page]
+    )
+    return recordSet
   }
 
   async findCount() {
@@ -37,9 +39,6 @@ class Query {
   async findAll() {
     const recordset = await this.db.prepareQuery('SELECT * FROM produk ');
     return recordset;
-    // this.db.setCollection('product')
-    // const recordset = await this.db.findMany();
-    // return recordset;
   }
 }
 

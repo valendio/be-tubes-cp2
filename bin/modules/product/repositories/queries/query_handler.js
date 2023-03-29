@@ -23,12 +23,11 @@ const getProductById = async (id) => {
   return result;
 };
 
-const getPaginatedProducts = async (limit, offset) => {
+const getPagination = async (payload) => {
   const getData = async () => {
-    const result = await product.Pagination(limit, offset);
+    const result = await product.pagination(payload);
     return result;
   };
-
   const result = await getData();
   return result;
 };
@@ -53,5 +52,5 @@ const getProductByIdCategories = async (id_categories) => {
 };
 
 module.exports = {
-  getAllProduct, getProductById, getProductByIdCategories, getPaginatedProducts,getProductCount,
+  getAllProduct, getProductById, getProductByIdCategories, getPagination,getProductCount,
 };

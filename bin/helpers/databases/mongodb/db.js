@@ -154,6 +154,56 @@ class DB {
 
   }
 
+  async deleteOne(parameter) {
+    const ctx = 'mongodb-deleteOne';
+    const dbName = await this.getDatabase();
+    const result = await mongoConnection.getConnection(this.config);
+    if (result.err) {
+      logger.log(ctx, result.err.message, 'Error mongodb connection');
+      return result;
+    }
+    try {
+      const cacheConnection = result.data.db;
+      const connection = cacheConnection.db(dbName);
+      const db = connection.collection(this.collectionName);
+      const recordset = await db.deleteOne(parameter);
+      if (validate.isEmpty(recordset)) {
+        return wrapper.error('Data Not Found Please Try Another Input');
+      }
+      return wrapper.data(recordset);
+
+    } catch (err) {
+      logger.log(ctx, err.message, 'Error find data in mongodb');
+      return wrapper.error(`Error Find One Mongo ${err.message}`);
+    }
+
+  }
+
+  async updateOne(parameter) {
+    const ctx = 'mongodb-updateOne';
+    const dbName = await this.getDatabase();
+    const result = await mongoConnection.getConnection(this.config);
+    if (result.err) {
+      logger.log(ctx, result.err.message, 'Error mongodb connection');
+      return result;
+    }
+    try {
+      const cacheConnection = result.data.db;
+      const connection = cacheConnection.db(dbName);
+      const db = connection.collection(this.collectionName);
+      const recordset = await db.UpdateOne(parameter);
+      if (validate.isEmpty(recordset)) {
+        return wrapper.error('Data Not Found Please Try Another Input');
+      }
+      return wrapper.data(recordset);
+
+    } catch (err) {
+      logger.log(ctx, err.message, 'Error find data in mongodb');
+      return wrapper.error(`Error Find One Mongo ${err.message}`);
+    }
+
+  }
+
   async findAllData(fieldName, row, page, param) {
     const ctx = 'mongodb-findAllData';
     const dbName = await this.getDatabase();

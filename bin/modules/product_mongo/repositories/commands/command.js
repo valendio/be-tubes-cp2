@@ -26,7 +26,7 @@ class Command {
     const parameter = {
       _id: ObjectId(id)
     };
-    const result = await this.db.findByIdAndDelete(parameter);
+    const result = await this.db.deleteOne(parameter);
     return result;
   }
 

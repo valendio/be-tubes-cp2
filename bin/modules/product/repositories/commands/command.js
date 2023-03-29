@@ -3,27 +3,12 @@ class Command {
     this.db = db;
   }
 
-  // async insertCategory(document) {
-  //   const { categoryName, isActive } = document;
-  // }
-  // async insertOneUser(document){
-  //   this.db.setCollection('user');
-  //   const result = await this.db.insertOne(document);
-  //   return result;
-  // }
-
   async insertProduct(document) {
     const { name, categories, price, details, isActive, id_categories } = document;
     const result = await this.db.prepareQuery(
       "INSERT INTO produk (name, categories, price, details, isActive, id_categories) VALUES (?,?,?,?,?,?)",
       [name, categories, price, details, isActive, id_categories]
     );
-    return result;
-  }
-
-
-  async deleteOneProduct(id) {
-    const result = await this.db.prepareQuery("DELETE FROM produk WHERE id = ?", id);
     return result;
   }
 
@@ -35,9 +20,13 @@ class Command {
     [name, categories, price, details, id_categories, id]
   );
   return result;
-  
-  
-}
+  }
+
+  async updateOneProduct(id) {
+    const result = await this.db.prepareQuery(
+      "DELETE FROM product WHERE id = ?",id );
+    return result;
+    }
 
 
 }

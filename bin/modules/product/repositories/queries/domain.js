@@ -44,8 +44,8 @@ class Product {
     return wrapper.data(data);
   }
 
-  async Pagination(limit, offset) {
-    const product = await this.query.Pagination(limit, offset);
+  async pagination(payload) {
+    const product = await this.query.Pagination(payload);
 
     // validation
     const { data } = product;
