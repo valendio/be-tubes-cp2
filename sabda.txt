@@ -1,0 +1,5 @@
+ngoding nk bin > modules 
+
+api handles tempat manggil api
+
+seng gak perlu dirubah validator
