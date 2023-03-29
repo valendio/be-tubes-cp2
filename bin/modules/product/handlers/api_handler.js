@@ -121,7 +121,7 @@ const UpdateProduct = async (req, res) => {
 };
 
 const pagination = async (req, res) => {
-  const { page } = req.params;
+  const { page } = req.query;
   const getData = async => queryHandler.getPagination(page);
   const sendResponse = async (result) => {
     result.err

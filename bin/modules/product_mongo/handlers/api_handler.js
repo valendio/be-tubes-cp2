@@ -101,10 +101,23 @@ const updateProduct = async (req, res) => {
   sendResponse(await getData());
 };
 
+const pagination = async (req, res) => {
+  const page  = parseInt(req.query.page);
+  const size = parseInt(req.query.size);
+  const getData = async => queryHandler.getPagination(page,size);
+  const sendResponse = async (result) => {
+    result.err
+      ? wrapper.response(res, "fail", result, "Get Product Failed", httpError.NOT_FOUND)
+      : wrapper.response(res, "success", result, "Get Product", http.OK);
+  };
+  sendResponse(await getData())
+};
+
 module.exports = {
   getProductById,
   getAllProduct,
   createProduct,
   deleteProduct,
-  updateProduct
+  updateProduct,
+  pagination
 };

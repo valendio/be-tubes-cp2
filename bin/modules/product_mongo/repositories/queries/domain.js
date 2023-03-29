@@ -25,6 +25,19 @@ class Product {
     const { data } = product;
     return wrapper.data(data);
   }
+
+  async getPagination(payload, page, size) {
+    const ctx = "domain-getPagination"
+    const product = await this.query.findPagination(payload, page, size);
+
+    // if (product.err) {
+    //   loggers.log(ctx, "Can not find Product", "Error");
+    //   return wrapper.error(new NotFoundError("Can not find Product"));
+    // }
+    // validation
+    const { data } = product;
+    return wrapper.data(data);
+  }
 }
 
 module.exports = Product;

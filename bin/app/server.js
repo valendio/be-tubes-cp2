@@ -95,6 +95,12 @@ function AppServer() {
     productHandlerMongo.updateProduct
   )
 
+  this.server.get(
+    "/api/products/pagination/:page",
+    jwtAuth.verifyToken,
+    productHandlerMongo.pagination
+  )
+
   //CONTENT MYSQL
 
   // this.server.post(
