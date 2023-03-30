@@ -20,16 +20,6 @@ class Query {
     return recordset;
   }
 
-  // async findPagination(payload, size) {
-  //  const limit = parseInt(size);
-  //   const page = (payload - 1) * limit;
-  //   // payload = (page - 1) * limit;
-
-  //   this.db.setCollection("product");
-  //   const recordset = await this.db.findAllData({}, limit, page );
-  //   return recordset;
-  // }
-
   async getPaginations(fieldName, row, page) {
     this.db.setCollection("product");
     const recordset = await this.db.findAllData(fieldName, row, page);

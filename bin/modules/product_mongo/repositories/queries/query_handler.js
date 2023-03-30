@@ -23,15 +23,6 @@ const getProductById = async (id) => {
   return result;
 };
 
-// const getPagination = async (payload, page, size) => {
-//   const getData = async () => {
-//     const result = await product.getPagination(payload, page, size);
-//     return result;
-//   };
-//   const result = await getData();
-//   return result;
-// };
-
 const getPagination = async (page) => {
   const getData = async () => {
     const result = await product.getPagination(page);
